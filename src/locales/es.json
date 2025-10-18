@@ -1,0 +1,36 @@
+{
+  "services": {
+    "ops": {
+      "title": "GESTIÓN",
+      "desc": "Optimice procesos, mejore la eficiencia, asegure cumplimiento y escale su empresa con precisión."
+    },
+    "cc": {
+      "title": "CENTRO DE CONTACTO",
+      "desc": "Mejore la experiencia del cliente con soporte multicanal y multilingüe—24/7, datos y empatía."
+    },
+    "it": {
+      "title": "SOPORTE IT",
+      "desc": "Asistencia técnica proactiva y segura en tiempo real, gestión en la nube y ciberdefensa para cualquier tamaño de empresa."
+    },
+    "pro": {
+      "title": "PROFESIONALES",
+      "desc": "Talento validado por OPS para TI, RRHH, proyectos y finanzas—contrato o tiempo completo, listo para usted."
+    }
+  },
+  "nav": {
+    "business-ops": "Gestion",
+    "contact-center": "Centro de Contacto",
+    "it-support": "Soporte IT",
+    "professionals": "Profesionales"
+  },
+  "home": {
+    "header": {
+      "heading": "Potencie su empresa. Simplifique su vida.",
+      "subheading": "Desde la eficiencia operativa hasta el personal experto, estamos a su lado."
+    },
+    "cta": {
+      "explore": "Explorar Servicios",
+      "contact": "Contáctanos"
+    }
+  }
+}
