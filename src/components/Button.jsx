@@ -1,20 +1,32 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-  background: var(--primary-color);
-  color: var(--text-color-dark);
-  border: none;
-  border-radius: 4px;
-  padding: 0.75rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1.25rem;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(17, 85, 204, 0.15);
 
-  &:hover {
-    background: var(--secondary-color);
-    transform: translateY(-2px);
+  &:hover,
+  &:focus-visible {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
   }
- main
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+  }
 `;
 
 export default Button;

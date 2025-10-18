@@ -6,9 +6,11 @@ import ITSupportPage from './pages/ITSupportPage';
 import ProfessionalServicesPage from './pages/ProfessionalServicesPage';
 import { ThemeProvider } from './ThemeContext';
 import GlobalStyle from './styles/GlobalStyle';
+
 const App = () => {
   return (
     <ThemeProvider>
+      <GlobalStyle />
       <Router>
         <Layout>
           <Routes>

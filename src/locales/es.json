@@ -1,36 +1,50 @@
 {
   "services": {
     "ops": {
-      "title": "GESTIÓN",
-      "desc": "Optimice procesos, mejore la eficiencia, asegure cumplimiento y escale su empresa con precisión."
+      "title": "Gestión",
+      "desc": "Optimice procesos, mejore la eficiencia, asegure el cumplimiento y escale su empresa con precisión."
     },
     "cc": {
-      "title": "CENTRO DE CONTACTO",
-      "desc": "Mejore la experiencia del cliente con soporte multicanal y multilingüe—24/7, datos y empatía."
+      "title": "Centro de Contacto",
+      "desc": "Eleve la experiencia del cliente con soporte multicanal y multilingüe — datos, empatía y disponibilidad 24/7."
     },
     "it": {
-      "title": "SOPORTE IT",
-      "desc": "Asistencia técnica proactiva y segura en tiempo real, gestión en la nube y ciberdefensa para cualquier tamaño de empresa."
+      "title": "Soporte IT",
+      "desc": "Asistencia técnica proactiva y segura en tiempo real, gestión en la nube y ciberdefensa para cualquier empresa."
     },
     "pro": {
-      "title": "PROFESIONALES",
-      "desc": "Talento validado por OPS para TI, RRHH, proyectos y finanzas—contrato o tiempo completo, listo para usted."
+      "title": "Profesionales",
+      "desc": "Talento validado por OPS para TI, RR. HH., proyectos y finanzas — contrato o tiempo completo, listo para usted."
     }
   },
   "nav": {
-    "business-ops": "Gestion",
+    "primary": "Navegación principal",
+    "business-ops": "Gestión",
     "contact-center": "Centro de Contacto",
     "it-support": "Soporte IT",
-    "professionals": "Profesionales"
+    "professionals": "Profesionales",
+    "toggle-language": "Cambiar idioma",
+    "enable-dark-mode": "Activar modo oscuro",
+    "enable-light-mode": "Activar modo claro"
   },
   "home": {
     "header": {
-      "heading": "Potencie su empresa. Simplifique su vida.",
-      "subheading": "Desde la eficiencia operativa hasta el personal experto, estamos a su lado."
+      "heading": "Impulse su empresa. Simplifique su vida.",
+      "subheading": "Desde la eficiencia operativa hasta el talento experto, estamos a su lado."
     },
     "cta": {
-      "explore": "Explorar Servicios",
-      "contact": "Contáctanos"
+      "explore": "Explorar servicios",
+      "contact": "Contáctanos",
+      "description": "Comparta los detalles de su solicitud y nuestro equipo responderá en un día hábil.",
+      "success": "¡Gracias! Su mensaje llegará de inmediato a nuestro equipo de operaciones.",
+      "error": "Algo falló. Inténtelo de nuevo o escriba a ops@support.ops"
+    },
+    "form": {
+      "name": "Nombre completo",
+      "email": "Correo corporativo",
+      "message": "¿Cómo podemos ayudarle?",
+      "submit": "Enviar mensaje",
+      "submitting": "Enviando..."
     }
   }
 }
