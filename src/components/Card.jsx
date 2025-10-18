@@ -1,28 +1,42 @@
+import { useId } from 'react';
 import styled from 'styled-components';
-import { useContext } from 'react';
-import { ThemeContext } from '../ThemeContext';
 
-const CardContainer = styled.div`
-  background: ${({ theme }) =>
-    theme === 'light' ? '#fff' : 'var(--background-color-dark)'};
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 2rem;
-  margin: 1rem;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+const CardContainer = styled.article`
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-height: 220px;
+  box-shadow: 0 18px 40px rgba(8, 19, 36, 0.12);
+  transition: transform var(--transition-base),
+    box-shadow var(--transition-base);
 
-  &:hover {
-    transform: translateY(-5px);
+  &:hover,
+  &:focus-within {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(8, 19, 36, 0.18);
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-secondary);
   }
 `;
 
 const Card = ({ title, description }) => {
-  const { theme } = useContext(ThemeContext);
+  const headingId = useId();
   return (
-    <CardContainer theme={theme}>
-      <h3>{title}</h3>
+    <CardContainer tabIndex={0} aria-labelledby={headingId}>
+      <h3 id={headingId}>{title}</h3>
       <p>{description}</p>
     </CardContainer>
   );
