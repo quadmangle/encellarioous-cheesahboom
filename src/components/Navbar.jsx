@@ -9,16 +9,20 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--primary-color);
+  padding: 1rem 2rem;
 `;
 
 const NavLinks = styled.div`
   a {
-    color: #fff;
+    color: var(--text-color-dark);
     margin: 0 1rem;
     text-decoration: none;
+    transition: color 0.3s ease;
 
-    &.active {
-      font-weight: bold;
+    &.active,
+    &:hover {
+      color: var(--secondary-color);
     }
   }
 `;

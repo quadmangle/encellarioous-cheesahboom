@@ -1,32 +1,24 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import { useContext } from 'react';
 import { ThemeContext } from '../ThemeContext';
 
 const LayoutContainer = styled.div`
-  background: ${({ theme }) => (theme === 'light' ? '#fff' : '#333')};
-  color: ${({ theme }) => (theme === 'light' ? '#333' : '#fff')};
+  background: ${({ theme }) =>
+    theme === 'light'
+      ? 'var(--background-color-light)'
+      : 'var(--background-color-dark)'};
+  color: ${({ theme }) =>
+    theme === 'light' ? 'var(--text-color-light)' : 'var(--text-color-dark)'};
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 `;
 
-const Header = styled.header`
-  background: ${({ theme }) => (theme === 'light' ? '#333' : '#666')};
-  color: #fff;
-  padding: 1rem;
-`;
-
 const Main = styled.main`
   flex: 1;
-  padding: 1rem;
-`;
-
-const FooterContainer = styled.footer`
-  background: ${({ theme }) => (theme === 'light' ? '#333' : '#666')};
-  color: #fff;
-  padding: 1rem;
+  padding: 1rem 2rem;
 `;
 
 const Layout = ({ children }) => {
@@ -34,13 +26,9 @@ const Layout = ({ children }) => {
 
   return (
     <LayoutContainer theme={theme}>
-      <Header theme={theme}>
-        <Navbar />
-      </Header>
+      <Navbar />
       <Main>{children}</Main>
-      <FooterContainer theme={theme}>
-        <Footer />
-      </FooterContainer>
+      <Footer />
     </LayoutContainer>
   );
 };

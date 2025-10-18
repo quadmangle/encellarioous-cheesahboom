@@ -1,8 +1,19 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import styled from 'styled-components';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
+const HomePageContainer = styled.div`
+  text-align: center;
+`;
+
+const CardContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+`;
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -28,14 +39,15 @@ const HomePage = () => {
   };
 
   return (
-    <div>
+    <HomePageContainer>
       <h1>{t('home.header.heading')}</h1>
       <p>{t('home.header.subheading')}</p>
-      <div style={{ display: 'flex' }}>
+      <CardContainer>
         <Card title={t('services.ops.title')} description={t('services.ops.desc')} />
         <Card title={t('services.cc.title')} description={t('services.cc.desc')} />
         <Card title={t('services.it.title')} description={t('services.it.desc')} />
         <Card title={t('services.pro.title')} description={t('services.pro.desc')} />
+      </CardContainer>
       </div>
       <Button onClick={() => setIsModalOpen(true)}>{t('home.cta.contact')}</Button>
       {isModalOpen && (
@@ -48,7 +60,7 @@ const HomePage = () => {
           </form>
         </Modal>
       )}
-    </div>
+    </HomePageContainer>
   );
 };
 
