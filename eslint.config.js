@@ -20,6 +20,7 @@ export default defineConfig([
         ...globals.jest,
         ...globals.node,
       },
+
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
