@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import PageContainer from '../styles/PageContainer';
-
 const ContactCenterPage = () => {
   const { t } = useTranslation();
 

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Modal from '../components/Modal';
-
 const HomePageContainer = styled.div`
   text-align: center;
 `;
@@ -49,6 +48,7 @@ const HomePage = () => {
         <Card title={t('services.it.title')} description={t('services.it.desc')} />
         <Card title={t('services.pro.title')} description={t('services.pro.desc')} />
       </CardContainer>
+      </div>
       <Button onClick={() => setIsModalOpen(true)}>{t('home.cta.contact')}</Button>
       {isModalOpen && (
         <Modal title={t('home.cta.contact')} onClose={() => setIsModalOpen(false)}>

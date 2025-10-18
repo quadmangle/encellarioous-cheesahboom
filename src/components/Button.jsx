@@ -14,6 +14,7 @@ const Button = styled.button`
     background: var(--secondary-color);
     transform: translateY(-2px);
   }
+ main
 `;
 
 export default Button;
