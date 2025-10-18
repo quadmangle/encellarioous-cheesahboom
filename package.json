@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "npm-run-all test:frontend test:backend",
     "test:frontend": "jest --config jest.config.cjs",
-    "test:backend": "cd server && npm test"
+    "test:backend": "cd server && npm test",
+    "audit": "npm audit"
   },
   "dependencies": {
     "i18next": "^25.6.0",
