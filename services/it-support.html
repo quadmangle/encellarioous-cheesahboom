@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>IT Support Services — OPS Online Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/services.css">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span class="dot" aria-hidden="true"></span><span>OPS Online Support</span></div>
+      <nav aria-label="Service navigation">
+        <a href="../index.html">Home</a>
+        <a href="business-operations.html">Business Ops</a>
+        <a href="it-support.html" aria-current="page">IT Support</a>
+        <a href="contact-center.html">Contact Center</a>
+        <a href="professionals.html">Professionals</a>
+        <a href="chatbot.html">Chatbot</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="hero">
+      <h1>IT Support &amp; DevOps Assistants</h1>
+      <p>Tiered Help Desk, technical support, and DevOps specialists who stabilize endpoints, unblock tickets, and keep CI/CD pipelines healthy.</p>
+      <div class="tags">
+        <span class="pill">Help Desk L1/L2</span>
+        <span class="pill">Technical Support</span>
+        <span class="pill">DevOps Automation</span>
+        <span class="pill">Secure Pipelines</span>
+      </div>
+    </article>
+
+    <section id="helpdesk">
+      <h2>Tiered Help Desk</h2>
+      <div class="grid cols-2">
+        <div class="card" id="helpdesk_l1">
+          <h3>Help Desk Assistant (Level I)</h3>
+          <ul>
+            <li>Password resets, software installs, and ticket intake.</li>
+            <li>Knowledge base lookups with documented escalation rules.</li>
+            <li>Friendly first-response coverage across time zones.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: help desk, L1, password reset, ticket intake</span>
+            <span class="cta">Get Matched →</span>
+          </footer>
+        </div>
+        <div class="card" id="helpdesk_l2">
+          <h3>Help Desk Assistant (Level II)</h3>
+          <ul>
+            <li>Diagnostics and configuration of complex incidents.</li>
+            <li>Resolution of SSO/MFA issues using structured runbooks.</li>
+            <li>Cross-team triage for seamless escalations.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: help desk, L2, diagnostics, SSO, MFA</span>
+            <span class="cta">Request Proposal →</span>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <section id="tech-support">
+      <h2>Technical Support</h2>
+      <div class="grid cols-2">
+        <div class="card" id="tech_l1">
+          <h3>Tech Support Assistant (Level I)</h3>
+          <ul>
+            <li>Hardware and software troubleshooting.</li>
+            <li>Basic remediation steps guided by scripted flows.</li>
+            <li>User coaching to avoid repeated incidents.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: tech support, L1, troubleshoot, hardware, software</span>
+            <span class="cta">Get Matched →</span>
+          </footer>
+        </div>
+        <div class="card" id="tech_l2">
+          <h3>Tech Support Assistant (Level II)</h3>
+          <ul>
+            <li>Advanced troubleshooting with log and dependency analysis.</li>
+            <li>Guided remediation with change notes and rollback hygiene.</li>
+            <li>Close coordination with product and engineering squads.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: tech support, L2, advanced, remediation</span>
+            <span class="cta">Request Proposal →</span>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <section id="devops">
+      <h2>DevOps Specialisations</h2>
+      <div class="grid cols-2">
+        <div class="card" id="devops_fe">
+          <h3>DevOps Assistant — Front-End</h3>
+          <ul>
+            <li>Build automation and UI deployment orchestration.</li>
+            <li>CI/CD hygiene with asset integrity checks.</li>
+            <li>Monitoring for regressions tied to UX releases.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: DevOps, front-end, CI/CD, build</span>
+            <span class="cta">Book Intro Call →</span>
+            <span class="cta">Request Proposal →</span>
+          </footer>
+        </div>
+        <div class="card" id="devops_be">
+          <h3>DevOps Assistant — Back-End</h3>
+          <ul>
+            <li>Server management and cloud service governance.</li>
+            <li>Infrastructure scripting with secrets handling under least privilege.</li>
+            <li>Resilience reviews for APIs, queues, and background workers.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: DevOps, back-end, cloud, infrastructure, secrets</span>
+            <span class="cta">Book Intro Call →</span>
+            <span class="cta">Request Proposal →</span>
+          </footer>
+        </div>
+        <div class="card" id="devops_fs">
+          <h3>DevOps Assistant — Full Stack</h3>
+          <ul>
+            <li>Pipeline maintenance with automated testing coverage.</li>
+            <li>Deployment monitoring and rollback discipline.</li>
+            <li>Continuous improvement loops for developer productivity.</li>
+          </ul>
+          <footer>
+            <span class="badge">Tags: DevOps, full stack, pipelines, automation, monitoring</span>
+            <span class="cta">Request Proposal →</span>
+          </footer>
+        </div>
+      </div>
+    </section>
+
+    <section id="governance">
+      <h2>Operational Guardrails</h2>
+      <blockquote>
+        Assistants enforce documented runbooks, least privilege, and change control checkpoints so your environment stays compliant with NIST, CISA Cyber Essentials, and PCI DSS guardrails.
+      </blockquote>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="navbar" style="justify-content: space-between; padding: 1rem 0;">
+      <a class="backlink" href="../index.html">← Back to main experience</a>
+      <span>© <span id="year"></span> OPS Online Support</span>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

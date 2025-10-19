@@ -19,6 +19,7 @@ This repository now ships a ready-to-open static bundle of the OPS Online Suppor
 ```
 .
 ├── assets/         # Compiled JavaScript and CSS bundles
+├── services/       # Standalone service detail pages extracted from the corpus
 ├── index.html      # Entry point – references the static assets with relative paths
 ├── sitemap.xml     # SEO sitemap generated from the original routes
 └── vite.svg        # Favicon referenced by the entry document
@@ -29,6 +30,9 @@ The original React app called an OPS API. In this static bundle the default `API
 
 ## Governance & compliance notes
 The bundle retains the accessibility, localisation, and security-centric UX copy from the full application. Because everything is pre-built, there are no node_modules, dev servers, or CLIs required to audit the experience—ideal for governance reviews and stakeholder demos.
+
+## Service detail pages
+The `services/` directory contains hand-authored pages for Business Operations, IT Support, Contact Center, Professionals, and the local Chatbot. Each page expands on the BM25 corpus entries so reviewers can audit service scope without invoking the in-app search.
 
 ---
 If you need to regenerate the bundle from source, restore the original React project history or rebuild from the pre-static tag. For day-to-day reviews, opening `index.html` is all that is required.

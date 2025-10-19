@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Local Chatbot &amp; BM25 Corpus — OPS Online Support</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../assets/services.css">
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span class="dot" aria-hidden="true"></span><span>OPS Online Support</span></div>
+      <nav aria-label="Service navigation">
+        <a href="../index.html">Home</a>
+        <a href="business-operations.html">Business Ops</a>
+        <a href="it-support.html">IT Support</a>
+        <a href="contact-center.html">Contact Center</a>
+        <a href="professionals.html">Professionals</a>
+        <a href="chatbot.html" aria-current="page">Chatbot</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="hero">
+      <h1>Local Chatbot &amp; BM25 Knowledge Base</h1>
+      <p>The floating chatbot searches a bilingual JSONL corpus with a lightweight BM25 ranker. Results stay on-device, filtered by the visitor&rsquo;s selected language (EN/ES).</p>
+      <div class="tags">
+        <span class="pill">BM25 Retrieval</span>
+        <span class="pill">Bilingual Responses</span>
+        <span class="pill">Secure &amp; Local</span>
+        <span class="pill">Service-Aware</span>
+      </div>
+    </article>
+
+    <section id="essence">
+      <h2>Essence of the Chatbot</h2>
+      <div class="card">
+        <h3>How it works</h3>
+        <ul>
+          <li>Embeds <code>ops_bm25_corpus.jsonl</code> directly in the page and parses it on load.</li>
+          <li>Tokenizes titles, bodies, and tags to construct inverse document frequencies.</li>
+          <li>Ranks documents locally, highlighting matched snippets and CTA badges.</li>
+          <li>Links visitors to anchor targets inside the service sections for faster wayfinding.</li>
+        </ul>
+        <footer>
+          <span class="badge">No external requests</span>
+          <span class="badge">Language-aware search</span>
+        </footer>
+      </div>
+    </section>
+
+    <section id="coverage">
+      <h2>Corpus Coverage</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>Business Operations</h3>
+          <p class="muted">Executive assistants, administrative support, global logistics, and trade compliance.</p>
+          <ul>
+            <li>Roles: Executive Assistant, Administrative Assistant, Logistics (Air, Ocean, Land, Dispatch), Export/Import, Logistics AM.</li>
+            <li>Focus: SLA alignment, CX follow-ups, multimodal freight control.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>IT Support</h3>
+          <p class="muted">Help Desk L1/L2, Technical Support L1/L2, and DevOps (Front-End, Back-End, Full Stack).</p>
+          <ul>
+            <li>Focus: Endpoint stability, ticket unblocking, CI/CD health, secrets governance.</li>
+            <li>Guardrails: Runbooks, least privilege, rollback discipline.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Contact Center</h3>
+          <p class="muted">Multichannel Help Desk, Customer Experience, Quality Assurance, and Billing support.</p>
+          <ul>
+            <li>Focus: CSAT uplift, compliance scoring, AP/AR accuracy.</li>
+            <li>Outputs: Coaching loops, audit notes, bilingual outreach.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Professionals</h3>
+          <p class="muted">C-Suite, HR Recruiter/Expert, HCM, and Business Consultant assistants.</p>
+          <ul>
+            <li>Focus: Executive briefings, HR governance, HCM analytics, consulting research.</li>
+            <li>Outputs: Investor notes, policy documentation, workshop assets.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="security">
+      <h2>Security &amp; Compliance Notes</h2>
+      <blockquote>
+        The chatbot honors the OPS CyberSec Core approach: no third-party calls, adherence to the site CSP, and data retention messaging aligned with the 90-day policy. Visitors remain in control of their information footprint.
+      </blockquote>
+    </section>
+
+    <section id="usage">
+      <h2>Using the Chatbot</h2>
+      <div class="card">
+        <h3>Steps</h3>
+        <ol>
+          <li>Select English or Spanish using the global toggle in the main interface.</li>
+          <li>Open the floating <em>Chatbot</em> button to reveal the search panel.</li>
+          <li>Ask about roles, services, logistics, or SLAs and review the top-ranked snippets.</li>
+          <li>Jump directly to a service section using the provided anchor link.</li>
+        </ol>
+        <footer>
+          <span class="badge">Highlights matched terms</span>
+          <span class="badge">Returns CTA badges</span>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="navbar" style="justify-content: space-between; padding: 1rem 0;">
+      <a class="backlink" href="../index.html">← Back to main experience</a>
+      <span>© <span id="year"></span> OPS Online Support</span>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
