@@ -1,0 +1,53 @@
+/* Keyframe Animations */
+@keyframes shine {
+  0%, 100% {
+    box-shadow: 0 0 6px hsla(311, 100%, 62%, 0.3), 0 0 12px hsla(311, 100%, 62%, 0.3);
+  }
+  5% {
+    box-shadow: 0 0 12px hsla(311, 100%, 62%, 0.8), 0 0 24px hsla(311, 100%, 62%, 0.8), 0 0 36px hsla(311, 100%, 62%, 0.6);
+  }
+  10% {
+    box-shadow: 0 0 6px hsla(311, 100%, 62%, 0.3), 0 0 12px hsla(311, 100%, 62%, 0.3);
+  }
+}
+
+.animate-shine {
+  animation: shine 60s infinite;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-scale-up {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+.modal-enter {
+  animation: modal-fade-in 0.2s ease-out;
+}
+
+.modal-content-enter {
+  animation: modal-scale-up 0.2s ease-out;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+.dragging {
+    cursor: grabbing;
+    user-select: none;
+}
