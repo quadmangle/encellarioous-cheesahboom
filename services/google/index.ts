@@ -7,6 +7,7 @@
  * in the 7-layer architecture.
  */
 import { GoogleGenAI, Chat } from "@google/genai";
+import { cacheRuntimeEnvValue, getRuntimeEnvValue } from '../../runtimeEnv';
 import type { ChatMessage } from '../../types';
 import type { AIService } from '../aiService';
 import { integrationConfig } from '../integrationConfig';
@@ -18,6 +19,7 @@ let ai: GoogleGenAI | null = null;
 let chat: Chat | null = null;
 
 const initializeChat = () => {
+<<<<<<< HEAD:services/google/index.ts
   const { apiKey, model } = integrationConfig.googleGemini;
 
   if (!apiKey) {
@@ -26,6 +28,19 @@ const initializeChat = () => {
     );
   }
 
+=======
+  const apiKey =
+    getRuntimeEnvValue('GEMINI_API_KEY') ??
+    getRuntimeEnvValue('API_KEY');
+
+  if (!apiKey) {
+    throw new Error(
+      "No Gemini API key found. Set window.__OPS_RUNTIME_ENV__.GEMINI_API_KEY before loading the app, or store it via runtime-config.js."
+    );
+  }
+
+  cacheRuntimeEnvValue('GEMINI_API_KEY', apiKey);
+>>>>>>> 438480d (Replace Vite toolchain with esbuild):new_src/services/google/index.ts
   ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `You are "Chattia," a professional, helpful, and empathetic AI assistant for OPS (Online Presence Solutions). Your primary goal is to understand the user's needs and guide them to the correct OPS service.
