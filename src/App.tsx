@@ -70,7 +70,7 @@ const App: React.FC = () => {
       <div className="relative z-10">
         <Header onOpenModal={handleOpenModal} onNavigateToService={handleServiceClick} />
         <main>
-          <Hero />
+          <Hero onPrimaryAction={() => handleOpenModal('CONTACT')} />
           <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
           <ServiceBreakdown />
         </main>

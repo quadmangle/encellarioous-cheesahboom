@@ -2,7 +2,11 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onPrimaryAction?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onPrimaryAction }) => {
   const { language } = useContext(GlobalContext);
   const content = {
     en: {
@@ -25,7 +29,13 @@ const Hero: React.FC = () => {
       <p className="text-base md:text-lg text-[#3d4754] dark:text-gray-400 mb-7 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '200ms', opacity: 0 }}>
         {content[language].subtitle}
       </p>
-      <button className="bg-[#12253f] dark:bg-accent text-white border-none py-3 px-8 font-semibold text-sm rounded-lg cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 animate-fade-in-up" style={{ animationDelay: '300ms', opacity: 0 }}>
+      <button
+        type="button"
+        onClick={onPrimaryAction}
+        className="bg-[#12253f] dark:bg-accent text-white border-none py-3 px-8 font-semibold text-sm rounded-lg cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#12253f] dark:focus-visible:ring-accent animate-fade-in-up"
+        style={{ animationDelay: '300ms', opacity: 0 }}
+        aria-label={content[language].button}
+      >
         {content[language].button}
       </button>
     </section>
