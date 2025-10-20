@@ -1,23 +1,23 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
-import type { ModalType, ServiceKey } from '../types';
+import type { ModalType } from '../types';
+import Icon from './Icon';
 
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
-  onNavigateToService: (key: ServiceKey) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
   const { language, setLanguage, theme, setTheme } = useContext(GlobalContext);
 
   const toggleLanguage = () => setLanguage(language === 'en' ? 'es' : 'en');
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
 
-  const navLinks: { key: ServiceKey; en: string; es: string }[] = [
-    { key: 'ops', en: 'Business Operations', es: 'Operaciones' },
-    { key: 'cc', en: 'Contact Center', es: 'Centro de Contacto' },
-    { key: 'it', en: 'IT Support', es: 'Soporte IT' },
-    { key: 'pro', en: 'Professionals', es: 'Profesionales' },
+  const navLinks = [
+    { en: 'Business Operations', es: 'Operaciones' },
+    { en: 'Contact Center', es: 'Centro de Contacto' },
+    { en: 'IT Support', es: 'Soporte IT' },
+    { en: 'Professionals', es: 'Profesionales' },
   ];
 
   return (
@@ -25,14 +25,9 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => 
       <span className="font-bold text-4xl text-accent tracking-widest drop-shadow-logo-glow select-none">OPS</span>
       <nav className="hidden lg:flex gap-9">
         {navLinks.map((link) => (
-          <button
-            key={link.key}
-            type="button"
-            onClick={() => onNavigateToService(link.key)}
-            className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
-          >
+          <a key={link.en} href="#" className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none">
             {link[language]}
-          </button>
+          </a>
         ))}
       </nav>
       <div className="flex items-center gap-2">
@@ -41,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => 
           title="Search Services"
           className="bg-primary/80 text-white rounded-md py-1.5 px-3 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none"
         >
-          <i className="fas fa-search"></i>
+          <Icon name="search" className="w-4 h-4" />
         </button>
         <button onClick={toggleLanguage} className="bg-primary text-white rounded-md py-1.5 px-4 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none">
           {language === 'en' ? 'ES' : 'EN'}
