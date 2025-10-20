@@ -2,12 +2,13 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
 import { SERVICES_DATA } from '../constants';
-import type { ServiceKey } from '../types';
+import Icon from './Icon';
+import type { IconName, ServiceKey } from '../types';
 
 interface ServiceCardProps {
   id: ServiceKey;
   title: string;
-  icon: string;
+  icon: IconName;
   desc: string;
   onClick: () => void;
   index: number;
@@ -28,7 +29,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ id, title, icon, desc, onClic
     <div
       className="text-3xl self-end justify-self-end bg-clip-text text-transparent bg-gradient-to-tr from-primary to-accent drop-shadow-icon-glow-light dark:drop-shadow-icon-glow-dark"
     >
-        <i className={icon}></i>
+        <Icon name={icon} className="w-7 h-7" />
     </div>
     <div className="col-span-2 mt-2.5 text-sm">
       <p className="whitespace-pre-line">{desc}</p>

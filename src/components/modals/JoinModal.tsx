@@ -5,6 +5,7 @@ import ModalWrapper from './ModalWrapper';
 import { useMovable } from '../../hooks/useMovable';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { SERVICES_DATA } from '../../constants';
+import Icon from '../Icon';
 
 type SectionWithAccept = 'skills' | 'education' | 'certification' | 'hobbies';
 type SectionSimple = 'continuedEducation' | 'experience';
@@ -193,7 +194,7 @@ const JoinModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) => {
         <div className="flex justify-between items-center">
           <h2 className="font-semibold text-light-text dark:text-dark-text flex items-center">
             {title}
-            {isCompleted && <i className="fas fa-check-circle text-green-500 ml-2"></i>}
+            {isCompleted && <Icon name="check-circle" className="w-5 h-5 text-green-500 ml-2" />}
           </h2>
           {hasAcceptEdit && (
             <div className="flex items-center">
@@ -273,7 +274,7 @@ const JoinModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) => {
             </div>
         </form>
         <div ref={resizeHandleRef} className="absolute bottom-1 right-1 w-4 h-4 cursor-se-resize text-gray-400 dark:text-gray-600 hover:text-accent transition-colors">
-            <i className="fas fa-expand-alt rotate-90"></i>
+            <Icon name="expand" className="w-5 h-5 rotate-90" />
         </div>
       </div>
     </ModalWrapper>

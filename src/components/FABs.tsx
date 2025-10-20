@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import type { ModalType } from '../types';
+import Icon from './Icon';
+import type { IconName, ModalType } from '../types';
 
 interface FABsProps {
   onOpenModal: (type: ModalType) => void;
@@ -8,11 +9,11 @@ interface FABsProps {
 const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const fabActions = [
-    { type: 'CHAT', icon: 'fa-comments', title: 'Chat with Chattia' },
-    { type: 'JOIN', icon: 'fa-user-plus', title: 'Join Our Team' },
-    { type: 'CONTACT', icon: 'fa-envelope', title: 'Contact Us' },
-  ] as const;
+  const fabActions: Array<{ type: Exclude<ModalType, 'SERVICE' | 'SEARCH' | null>; icon: IconName; title: string }> = [
+    { type: 'CHAT', icon: 'chat', title: 'Chat with Chattia' },
+    { type: 'JOIN', icon: 'user-plus', title: 'Join Our Team' },
+    { type: 'CONTACT', icon: 'envelope', title: 'Contact Us' },
+  ];
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -24,7 +25,7 @@ const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
             {fabActions.map((action, index) => (
               <button
                 key={action.type}
-                style={{ animationDelay: `${index * 50}ms`}}
+                style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => {
                   onOpenModal(action.type);
                   setIsOpen(false);
@@ -32,7 +33,7 @@ const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
                 className="w-14 h-14 rounded-full bg-accent text-white shadow-lg flex items-center justify-center transition-transform transform hover:scale-110 opacity-0"
                 title={action.title}
               >
-                <i className={`fas ${action.icon} text-xl`}></i>
+                <Icon name={action.icon} className="w-5 h-5" />
               </button>
             ))}
           </div>
@@ -43,7 +44,10 @@ const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
           aria-label="Toggle action menu"
           aria-expanded={isOpen}
         >
-          <i className={`fas ${isOpen ? 'fa-times' : 'fa-plus'} text-2xl transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-45' : ''}`}></i>
+          <Icon
+            name={isOpen ? 'close' : 'plus'}
+            className={`w-6 h-6 transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-45' : ''}`}
+          />
         </button>
       </div>
     </div>

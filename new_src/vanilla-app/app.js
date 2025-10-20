@@ -1,1 +1,0 @@
-full contents of vanilla-app/app.js

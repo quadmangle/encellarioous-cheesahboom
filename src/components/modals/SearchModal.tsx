@@ -4,6 +4,7 @@ import { GlobalContext } from '../../contexts/GlobalContext';
 import ModalWrapper from './ModalWrapper';
 import { BM25 } from '../../services/efficiency/bm25';
 import { SERVICES_DATA } from '../../constants';
+import Icon from '../Icon';
 
 // Fix: Add type definitions for the Web Speech API to prevent TypeScript errors.
 interface SpeechRecognition extends EventTarget {
@@ -146,7 +147,7 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <ModalWrapper isOpen={isOpen} onClose={onClose} modalClassName="w-[96vw] max-w-2xl min-w-[310px] top-[15vh]">
             <div className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-2xl shadow-2xl flex flex-col overflow-hidden">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
-                    <i className="fas fa-search text-gray-400"></i>
+                    <Icon name="search" className="w-5 h-5 text-gray-400" />
                     <input
                         id="global-search-input"
                         type="text"
@@ -164,7 +165,7 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                             : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'
                         }`}
                     >
-                        <i className="fas fa-microphone"></i>
+                        <Icon name="microphone" className="w-4 h-4" />
                     </button>
                     <button onClick={onClose} className="text-sm bg-gray-200 dark:bg-gray-700 rounded px-2 py-0.5 font-mono">ESC</button>
                 </div>
@@ -177,7 +178,7 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                                         onClick={() => handleResultClick(result.key)}
                                         className="w-full text-left p-4 hover:bg-primary/10 dark:hover:bg-primary/20 transition-colors flex items-center gap-4"
                                     >
-                                        <i className={`${result.icon} text-2xl text-accent w-8 text-center`}></i>
+                                        <Icon name={result.icon} className="w-6 h-6 text-accent" />
                                         <div>
                                             <div className="font-semibold">{result.title}</div>
                                             <div className="text-sm text-gray-500 dark:text-gray-400">{result.desc}</div>

@@ -9,6 +9,8 @@ export interface GlobalContextType {
   setTheme: (theme: Theme) => void;
 }
 
+export type IconName = 'square' | 'chat' | 'user-plus' | 'envelope' | 'close' | 'plus' | 'home' | 'layers' | 'search' | 'microphone' | 'check-circle' | 'expand' | 'paper-plane';
+
 export type ServiceKey = 'ops' | 'cc' | 'it' | 'pro';
 
 export type ModalType = 'SERVICE' | 'SEARCH' | 'CHAT' | 'JOIN' | 'CONTACT' | null;
@@ -25,7 +27,7 @@ export interface ModalData {
 
 export interface ServiceData {
   title: string;
-  icon: string;
+  icon: IconName;
   desc: string;
   modal: ModalData;
 }

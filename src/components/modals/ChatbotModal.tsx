@@ -5,6 +5,7 @@ import ModalWrapper from './ModalWrapper';
 import { useMovable } from '../../hooks/useMovable';
 import { streamChatResponse, resetChat, ACTIVE_STACK } from '../../services/aiService';
 import { useChatSession } from '../../hooks/useChatSession';
+import Icon from '../Icon';
 
 const ChatbotModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -214,12 +215,12 @@ const ChatbotModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
               disabled={isLoading}
             />
             <button type="submit" className="py-2 px-4 rounded-lg bg-primary text-white hover:bg-accent disabled:bg-gray-400" disabled={isLoading || !input.trim()}>
-              <i className="fas fa-paper-plane"></i>
+              <Icon name="paper-plane" className="w-4 h-4" />
             </button>
           </form>
         </div>
         <div ref={resizeHandleRef} className="absolute bottom-1 right-1 w-4 h-4 cursor-se-resize text-gray-400 dark:text-gray-600 hover:text-accent transition-colors">
-            <i className="fas fa-expand-alt rotate-90"></i>
+            <Icon name="expand" className="w-5 h-5 rotate-90" />
         </div>
       </div>
     </ModalWrapper>

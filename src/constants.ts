@@ -6,7 +6,7 @@ export const SERVICES_DATA: Services = {
   ops: {
     en: {
       title: "BUSINESS OPERATIONS",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Focus on Efficiencies to scale your Business",
       modal: {
         title: "BUSINESS OPERATIONS",
@@ -31,7 +31,7 @@ export const SERVICES_DATA: Services = {
     },
     es: {
       title: "OPERACIONES EMPRESARIALES",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Enfoque en eficiencias para escalar su negocio",
       modal: {
         title: "SOBRE OPERACIONES EMPRESARIALES",
@@ -58,7 +58,7 @@ export const SERVICES_DATA: Services = {
   cc: {
     en: {
       title: "CONTACT CENTER",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Provide 5 Star Customer Experience, \nin a multi lingual, with Engaged \nTop Experienced Support",
       modal: {
         title: "CONTACT CENTER",
@@ -78,7 +78,7 @@ export const SERVICES_DATA: Services = {
     },
     es: {
       title: "CENTRO DE CONTACTO",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Proporcione una experiencia de cliente de 5 estrellas, \nmultilingüe, con soporte comprometido \ny de máxima experiencia",
       modal: {
         title: "SOBRE EL CENTRO DE CONTACTO",
@@ -100,7 +100,7 @@ export const SERVICES_DATA: Services = {
   it: {
     en: {
       title: "IT SUPPORT",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "High Quality Tech Assistance for\neveryday business size",
       modal: {
         title: "IT SUPPORT",
@@ -122,7 +122,7 @@ export const SERVICES_DATA: Services = {
     },
     es: {
       title: "SOPORTE IT",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Asistencia técnica de alta calidad para\nempresas de cualquier tamaño",
       modal: {
         title: "SOBRE SOPORTE IT",
@@ -146,7 +146,7 @@ export const SERVICES_DATA: Services = {
   pro: {
     en: {
       title: "PROFESSIONALS",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Experienced Talent for Business operations\nfrom Marketing to HR to Logistics, ready when you are",
       modal: {
         title: "PROFESSIONALS",
@@ -167,7 +167,7 @@ export const SERVICES_DATA: Services = {
     },
     es: {
       title: "PROFESIONALES",
-      icon: "fa-regular fa-square",
+      icon: "square",
       desc: "Talento experimentado para operaciones empresariales,\ndesde marketing hasta RRHH y logística, listo cuando lo necesite",
       modal: {
         title: "SOBRE PROFESIONALES",

@@ -5,6 +5,7 @@ import ModalWrapper from './ModalWrapper';
 import { useMovable } from '../../hooks/useMovable';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import { SERVICES_DATA } from '../../constants';
+import Icon from '../Icon';
 
 const ContactModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -115,7 +116,7 @@ const ContactModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
           </form>
         </div>
         <div ref={resizeHandleRef} className="absolute bottom-1 right-1 w-4 h-4 cursor-se-resize text-gray-400 dark:text-gray-600 hover:text-accent transition-colors">
-            <i className="fas fa-expand-alt rotate-90"></i>
+            <Icon name="expand" className="w-5 h-5 rotate-90" />
         </div>
       </div>
     </ModalWrapper>

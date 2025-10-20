@@ -1,5 +1,6 @@
 import React from 'react';
-import type { ModalType } from '../types';
+import Icon from './Icon';
+import type { IconName, ModalType } from '../types';
 
 interface MobileNavProps {
   onOpenModal: (type: ModalType) => void;
@@ -7,13 +8,13 @@ interface MobileNavProps {
 }
 
 const MobileNav: React.FC<MobileNavProps> = ({ onOpenModal, onToggleServicesMenu }) => {
-  const navItems = [
-    { type: 'HOME', icon: 'fa-home', label: 'Home' },
-    { type: 'JOIN', icon: 'fa-user-plus', label: 'Join Us' },
-    { type: 'CHAT', icon: 'fa-comments', label: 'Chat' },
-    { type: 'SERVICES', icon: 'fa-layer-group', label: 'Services' },
-    { type: 'CONTACT', icon: 'fa-envelope', label: 'Contact' },
-  ] as const;
+  const navItems: Array<{ type: 'HOME' | 'JOIN' | 'CHAT' | 'SERVICES' | 'CONTACT'; icon: IconName; label: string }> = [
+    { type: 'HOME', icon: 'home', label: 'Home' },
+    { type: 'JOIN', icon: 'user-plus', label: 'Join Us' },
+    { type: 'CHAT', icon: 'chat', label: 'Chat' },
+    { type: 'SERVICES', icon: 'layers', label: 'Services' },
+    { type: 'CONTACT', icon: 'envelope', label: 'Contact' },
+  ];
 
   const handleNavClick = (type: typeof navItems[number]['type']) => {
     switch (type) {
@@ -43,7 +44,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ onOpenModal, onToggleServicesMenu
             className="flex flex-col items-center justify-center text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-accent transition-colors w-1/5"
             aria-label={item.label}
           >
-            <i className={`fas ${item.icon} text-2xl mb-1`}></i>
+            <Icon name={item.icon} className="w-6 h-6 mb-1" />
             <span className="text-xs font-medium">{item.label}</span>
           </button>
         ))}

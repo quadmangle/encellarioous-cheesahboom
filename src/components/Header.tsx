@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
-import { ModalType } from '../types';
+import type { ModalType } from '../types';
+import Icon from './Icon';
 
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
@@ -35,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal }) => {
           title="Search Services"
           className="bg-primary/80 text-white rounded-md py-1.5 px-3 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none"
         >
-          <i className="fas fa-search"></i>
+          <Icon name="search" className="w-4 h-4" />
         </button>
         <button onClick={toggleLanguage} className="bg-primary text-white rounded-md py-1.5 px-4 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none">
           {language === 'en' ? 'ES' : 'EN'}

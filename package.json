@@ -1,0 +1,22 @@
+{
+  "name": "ops-online-support",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.8.2",
+    "@types/node": "^22.14.0"
+  }
+}
