@@ -1,8 +1,9 @@
 import type { Language } from '../../../types';
 import { BM25 } from '../../efficiency/bm25';
+import { integrationConfig } from '../../integrationConfig';
 import type { KnowledgeDocument, KnowledgeHit, KnowledgeResult } from '../types';
 
-const KNOWLEDGE_SOURCE_URL = '/ops_bm25_corpus.jsonl';
+const KNOWLEDGE_SOURCE_URL = integrationConfig.knowledgeBase.corpusUrl;
 
 let bm25Index: BM25<string> | null = null;
 let documents: KnowledgeDocument[] = [];

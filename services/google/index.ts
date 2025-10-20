@@ -9,6 +9,7 @@
 import { GoogleGenAI, Chat } from "@google/genai";
 import type { ChatMessage } from '../../types';
 import type { AIService } from '../aiService';
+import { integrationConfig } from '../integrationConfig';
 
 // --- On-Demand Initialization ---
 // The AI client and chat session are now initialized lazily on the first API call.
@@ -17,10 +18,15 @@ let ai: GoogleGenAI | null = null;
 let chat: Chat | null = null;
 
 const initializeChat = () => {
-  if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable not set.");
+  const { apiKey, model } = integrationConfig.googleGemini;
+
+  if (!apiKey) {
+    throw new Error(
+      "Google Gemini API key not configured. Set VITE_GEMINI_API_KEY in your environment."
+    );
   }
-  ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+  ai = new GoogleGenAI({ apiKey });
 
   const systemInstruction = `You are "Chattia," a professional, helpful, and empathetic AI assistant for OPS (Online Presence Solutions). Your primary goal is to understand the user's needs and guide them to the correct OPS service.
 
@@ -34,7 +40,7 @@ const initializeChat = () => {
       - You MUST NOT ask for or store any Personally Identifiable Information (PII).`;
 
   chat = ai.chats.create({
-    model: 'gemini-2.5-flash',
+    model,
     config: {
         systemInstruction,
     },
