@@ -1,4 +1,4 @@
-# OPS Unified Portal
+# Ops Online Support
 
 This project hosts the interactive OPS customer experience portal built with React 19 and Vite. It unifies the landing experience, contextual service discovery, and AI-assisted support fabric that powers the OPS ecosystem.
 
