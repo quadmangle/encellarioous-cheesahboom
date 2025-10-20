@@ -5,6 +5,8 @@
  * This file acts as the single entry point for all AI-related functionality in the application.
  * It allows swapping the entire AI backend by changing the `ACTIVE_SERVICE_STACK` variable.
  * The UI components are completely decoupled from the specific implementation details of the AI service.
+ *
+ * Integration secrets and endpoints are centralized in `services/integrationConfig.ts`.
  */
 
 // --- Configuration ---

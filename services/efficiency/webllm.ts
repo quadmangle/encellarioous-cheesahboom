@@ -7,6 +7,7 @@
  * to ensure the heavy model is only initialized once.
  */
 import type { ChatMessage, AIProgress } from '../../types';
+import { integrationConfig } from '../integrationConfig';
 
 // FIX: Declare the 'webllm' global variable, which is loaded from a script tag.
 // This informs TypeScript of its existence and prevents "Cannot find name" errors.
@@ -17,7 +18,7 @@ type EngineStatus = 'uninitialized' | 'loading' | 'ready' | 'error';
 let engine: any = null;
 let status: EngineStatus = 'uninitialized';
 let initializationPromise: Promise<void> | null = null;
-const MODEL_ID = 'gemma-2b-it-q4f32_1';
+const MODEL_ID = integrationConfig.webLLM.modelId;
 
 /**
  * Initializes the WebLLM engine. This is the core of the on-demand strategy.
