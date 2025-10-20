@@ -33,14 +33,17 @@ const ServiceBreakdown: React.FC = () => {
         {(Object.entries(SERVICES_DATA) as [ServiceKey, typeof SERVICES_DATA[ServiceKey]][]).map(([key, data]) => {
           const service = data[language];
           const { modal } = service;
+          const headingId = `service-breakdown-heading-${key}`;
 
           return (
             <article
               key={key}
+              id={`service-section-${key}`}
+              aria-labelledby={headingId}
               className="bg-white/80 dark:bg-dark-card border border-white/40 dark:border-white/10 rounded-3xl p-8 shadow-card-light dark:shadow-card-dark backdrop-blur-lg"
             >
               <header className="mb-4">
-                <h3 className="text-xl font-semibold text-primary dark:text-accent mb-2">
+                <h3 id={headingId} className="text-xl font-semibold text-primary dark:text-accent mb-2">
                   {service.title}
                 </h3>
                 <p className="text-sm text-[#3d4754] dark:text-gray-400 whitespace-pre-line">

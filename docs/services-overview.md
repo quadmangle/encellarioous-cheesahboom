@@ -38,4 +38,5 @@ This document catalogs the AI service implementations extracted from `1_Ops-chat
 - Empty scaffolds such as `new_src/services/googleAIService.ts` or `new_src/services/webllm.ts` mark extension points for future integrations retained from the original archive.
 
 ## Front-End Service Breakdown
-- `new_src/components/ServiceBreakdown.tsx` renders the role-by-role breakdown from `SERVICES_DATA` so visitors can see capabilities like Help Desk Level I/II, DevOps, and logistics assistants directly on the page without opening a modal.【F:new_src/components/ServiceBreakdown.tsx†L1-L66】【F:new_src/constants.ts†L1-L172】
+- `new_src/components/ServiceBreakdown.tsx` renders the role-by-role breakdown from `SERVICES_DATA` so visitors can see capabilities like Help Desk Level I/II, DevOps, and logistics assistants directly on the page without opening a modal. Each article is tagged with a stable anchor so navigation can deep-link to the correct breakdown.【F:new_src/components/ServiceBreakdown.tsx†L1-L72】【F:new_src/constants.ts†L1-L172】
+- Desktop navigation now triggers smooth scrolling to the corresponding service section, and the mobile services sheet uses the same handler so every menu entry lands on the right role breakdown without extra routing.【F:new_src/components/Header.tsx†L1-L53】【F:new_src/App.tsx†L18-L86】
