@@ -1,21 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OPS Online Support</title>
     <script>
-      if (
-        window.location.pathname === "/" ||
-        window.location.pathname === "/index.html"
-      ) {
-        window.history.replaceState(null, "", "/business-operations");
+      // Custom Tailwind theme configuration to match the original design's aesthetic
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#00c4ff',
+              accent: {
+                DEFAULT: '#ff3bdc',
+                dark: '#e000be',
+              },
+              'dark-bg': '#13162a',
+              'dark-card': 'rgba(32,26,49,0.91)',
+              'dark-footer': '#251541',
+              'dark-modal': '#251541',
+              'light-text': '#333',
+              'dark-text': '#fafbfe',
+            },
+            boxShadow: {
+              'card-light': '0 2px 28px rgba(182, 185, 247, 0.66), -20px 20px 40px hsla(270, 42%, 45%, 0.18)',
+              'card-dark': '0 2px 24px rgba(17, 20, 43, 0.53)',
+              'card-light-hover': '0 4px 32px rgba(255, 59, 220, 0.13)',
+            },
+            dropShadow: {
+              'logo-glow': '0 0 8px #ffb3fd',
+              'icon-glow-light': '0 0 2px rgba(255, 239, 47, 0.33)',
+              'icon-glow-dark': '0 0 2px rgba(0, 196, 255, 0.33)',
+            }
+          }
+        }
       }
     </script>
+    
     <link rel="stylesheet" href="./assets/app.css" />
     <script type="module" src="./assets/app.js"></script>
   </head>
   <body>
     <div id="root"></div>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>

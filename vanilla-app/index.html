@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OPS Unified Portal (Vanilla JS)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Custom Tailwind theme configuration
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#00c4ff',
+            accent: {
+              DEFAULT: '#ff3bdc',
+              dark: '#e000be',
+            },
+            'dark-bg': '#13162a',
+            'dark-card': 'rgba(32,26,49,0.91)',
+            'dark-footer': '#251541',
+            'dark-modal': '#251541',
+            'light-text': '#333',
+            'dark-text': '#fafbfe',
+          },
+          boxShadow: {
+            'card-light': '0 2px 28px rgba(182, 185, 247, 0.66), -20px 20px 40px hsla(270, 42%, 45%, 0.18)',
+            'card-dark': '0 2px 24px rgba(17, 20, 43, 0.53)',
+            'card-light-hover': '0 4px 32px rgba(255, 59, 220, 0.13)',
+          },
+          dropShadow: {
+            'logo-glow': '0 0 8px #ffb3fd',
+            'icon-glow-light': '0 0 2px rgba(255, 239, 47, 0.33)',
+            'icon-glow-dark': '0 0 2px rgba(0, 196, 255, 0.33)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="overflow-x-hidden">
+
+  <div id="app-container">
+    <!-- App Content -->
+  </div>
+
+  <!-- Modals Container -->
+  <div id="modal-container"></div>
+  
+  <script type="module" src="app.js"></script>
+</body>
+</html>
