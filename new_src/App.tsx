@@ -11,6 +11,7 @@ import ContactModal from './components/modals/ContactModal';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
+import ServiceBreakdown from './components/ServiceBreakdown';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { ModalType, ServiceKey } from './types';
 
@@ -66,6 +67,7 @@ const App: React.FC = () => {
         <main>
           <Hero />
           <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
+          <ServiceBreakdown />
         </main>
         <Footer />
         <MobileNav onOpenModal={handleOpenModal} onToggleServicesMenu={toggleServicesMenu} />

@@ -36,3 +36,6 @@ This document catalogs the AI service implementations extracted from `1_Ops-chat
 ## Simulation & Legacy Hooks
 - `new_src/services/geminiService.ts` remains as a simulated streaming responder for environments without external AI credentials, guiding users toward OPS offerings while exercising the chat UI.【F:new_src/services/geminiService.ts†L1-L26】
 - Empty scaffolds such as `new_src/services/googleAIService.ts` or `new_src/services/webllm.ts` mark extension points for future integrations retained from the original archive.
+
+## Front-End Service Breakdown
+- `new_src/components/ServiceBreakdown.tsx` renders the role-by-role breakdown from `SERVICES_DATA` so visitors can see capabilities like Help Desk Level I/II, DevOps, and logistics assistants directly on the page without opening a modal.【F:new_src/components/ServiceBreakdown.tsx†L1-L66】【F:new_src/constants.ts†L1-L172】
