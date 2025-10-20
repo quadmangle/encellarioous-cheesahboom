@@ -1,4 +1,4 @@
-# OPS Online Support
+# Ops Online Support
 
 The OPS Online Support experience is a React single-page application that runs entirely as static assets. The goal of this refactor is to remove the Vite development server dependency and keep the seven-layer "Chattia7" architecture intact while allowing the portal to be served from any static host (including loading the `index.html` file directly from disk).
 
