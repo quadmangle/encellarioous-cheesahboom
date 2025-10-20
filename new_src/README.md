@@ -1,8 +1,9 @@
-# OPS Unified Portal (No-Vite Edition)
+# OPS Unified Portal (Esbuild Edition)
 
 This directory now runs fully on top of an `esbuild` toolchain so that the UI
-can be developed and deployed without depending on Vite. The React application
-is bundled into modern ESM that the browser can load directly, and a couple of
+can be developed and deployed without relying on any particular dev-server.
+The React application is bundled into modern ESM that the browser can load
+directly, and a couple of
 small Node scripts take care of the developer workflow (dev server, production
 build, and preview).
 
@@ -54,9 +55,8 @@ The preview server hosts `dist/` on `http://localhost:4173`.
 
 ## Configuring runtime secrets
 
-Vite previously injected `process.env.*` values for the Gemini escalation
-layer. The esbuild-based setup now reads them from `window.__OPS_RUNTIME_ENV__`
-at runtime instead.
+The esbuild-based setup reads the Gemini escalation secrets from
+`window.__OPS_RUNTIME_ENV__` at runtime.
 
 1. Copy `runtime-config.example.js` to `runtime-config.js` in this folder.
 2. Add your keys to the object:

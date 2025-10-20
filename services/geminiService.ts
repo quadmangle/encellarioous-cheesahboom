@@ -4,8 +4,8 @@ import type { ChatMessage } from '../types';
  * This service provides a simulated chat response for demonstration purposes.
  * It does not connect to any external AI/LLM service.
  * To enable a real AI chatbot, integrate `services/google/index.ts` and
- * configure your keys in `services/integrationConfig.ts` (or the matching
- * `VITE_*` environment variables).
+ * configure your keys in `services/integrationConfig.ts` (or set matching
+ * values on `window.__OPS_RUNTIME_ENV__`).
  */
 
 export const streamChatResponse = async (history: ChatMessage[], newMessage: string, onChunk: (chunk: string) => void) => {

@@ -1,54 +1,75 @@
+type RuntimeEnv = Record<string, string | undefined>;
+
+declare global {
+  // eslint-disable-next-line no-var
+  var __OPS_RUNTIME_ENV__?: RuntimeEnv;
+  interface Window {
+    __OPS_RUNTIME_ENV__?: RuntimeEnv;
+  }
+}
+
+const readRuntimeValue = (key: string): string | undefined => {
+  const globalEnv = (globalThis as typeof globalThis & { __OPS_RUNTIME_ENV__?: RuntimeEnv }).__OPS_RUNTIME_ENV__;
+  const fromGlobal = globalEnv?.[key];
+  if (typeof fromGlobal === 'string' && fromGlobal.trim().length > 0) {
+    return fromGlobal;
+  }
+
+  if (typeof process !== 'undefined' && process.env) {
+    const fromProcess = process.env[key];
+    if (typeof fromProcess === 'string' && fromProcess.trim().length > 0) {
+      return fromProcess;
+    }
+  }
+
+  return undefined;
+};
+
 /**
  * Central configuration for all external service integrations used across the app.
  *
- * Update the values here (or the associated environment variables) when rotating
- * API keys, switching providers, or pointing to different deployment endpoints.
- * Every service file imports from this module so there is a single place to review
- * and replace integration values.
+ * Values can be supplied at runtime by assigning to `window.__OPS_RUNTIME_ENV__`
+ * before the bundle executes (or by providing matching process environment
+ * variables during static builds). This keeps credentials out of source control
+ * while avoiding toolchain-specific helpers.
  */
 export const integrationConfig = {
   googleGemini: {
     /**
      * Google AI Studio API key.
-     * Set via Vite environment variable `VITE_GEMINI_API_KEY`.
      * Console: https://aistudio.google.com/app/apikey
      */
-    apiKey: import.meta.env.VITE_GEMINI_API_KEY ?? '',
+    apiKey: readRuntimeValue('GEMINI_API_KEY') ?? '',
     /**
      * Gemini model identifier to request during chat escalations.
-     * Override with `VITE_GEMINI_MODEL` to test different releases quickly.
      */
-    model: import.meta.env.VITE_GEMINI_MODEL ?? 'gemini-2.5-flash',
+    model: readRuntimeValue('GEMINI_MODEL') ?? 'gemini-2.5-flash',
   },
   cloudflare: {
     /**
      * Cloudflare Worker endpoint that proxies calls to Workers AI.
-     * Configure through `VITE_CLOUDFLARE_WORKER_URL` for rapid redeployments.
      */
-    workerUrl: import.meta.env.VITE_CLOUDFLARE_WORKER_URL ?? '',
+    workerUrl: readRuntimeValue('CLOUDFLARE_WORKER_URL') ?? '',
   },
   tensorFlow: {
     /**
      * TensorFlow.js toxicity model URL.
-     * Override with `VITE_TF_TOXICITY_MODEL_URL` to point at a custom hosted model.
      */
     toxicityModelUrl:
-      import.meta.env.VITE_TF_TOXICITY_MODEL_URL ??
+      readRuntimeValue('TF_TOXICITY_MODEL_URL') ??
       'https://tfhub.dev/tensorflow/tfjs-model/toxicity/1/default/1',
   },
   knowledgeBase: {
     /**
      * Location of the JSONL corpus used for BM25 retrieval.
-     * Update with `VITE_KB_CORPUS_URL` when relocating the dataset.
      */
-    corpusUrl: import.meta.env.VITE_KB_CORPUS_URL ?? '/ops_bm25_corpus.jsonl',
+    corpusUrl: readRuntimeValue('KB_CORPUS_URL') ?? '/ops_bm25_corpus.jsonl',
   },
   webLLM: {
     /**
      * WebLLM model identifier loaded in the browser.
-     * Override with `VITE_WEBLLM_MODEL_ID` to test lighter or heavier models.
      */
-    modelId: import.meta.env.VITE_WEBLLM_MODEL_ID ?? 'gemma-2b-it-q4f32_1',
+    modelId: readRuntimeValue('WEBLLM_MODEL_ID') ?? 'gemma-2b-it-q4f32_1',
   },
 } as const;
 
