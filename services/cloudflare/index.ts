@@ -26,7 +26,8 @@ const streamChatResponse: AIService['streamChatResponse'] = async (
   onChunk: (chunk: string) => void
 ) => {
   if (!CLOUDFLARE_WORKER_URL) {
-    const msg = "Cloudflare AI service is not configured. Set VITE_CLOUDFLARE_WORKER_URL in your env or update services/integrationConfig.ts.";
+    const msg =
+      'Cloudflare AI service is not configured. Populate services/cloudflare/index.ts or set window.__OPS_RUNTIME_ENV__.CLOUDFLARE_WORKER_URL.';
     console.warn(msg);
     onChunk(msg);
     return;

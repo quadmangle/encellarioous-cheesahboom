@@ -1,49 +1,21 @@
-// src/services/google/index.ts
+// services/google/index.ts
 /**
  * Google AI Service (Gemini)
  *
- * This service connects to the Google Gemini API to provide powerful,
- * generative AI responses. It serves as the "Escalation Layer" (Layer 7)
- * in the 7-layer architecture.
+ * Provides the escalation layer that connects to Google Gemini. The module reads
+ * credentials from `integrationConfig` which, in turn, supports runtime
+ * injection through `window.__OPS_RUNTIME_ENV__` or standard process
+ * environment variables during builds.
  */
-import { GoogleGenAI, Chat } from "@google/genai";
-import { cacheRuntimeEnvValue, getRuntimeEnvValue } from '../../runtimeEnv';
+import { GoogleGenAI, type Chat } from '@google/genai';
 import type { ChatMessage } from '../../types';
 import type { AIService } from '../aiService';
 import { integrationConfig } from '../integrationConfig';
 
-// --- On-Demand Initialization ---
-// The AI client and chat session are now initialized lazily on the first API call.
-// This improves initial page load performance and resource management.
 let ai: GoogleGenAI | null = null;
 let chat: Chat | null = null;
 
-const initializeChat = () => {
-<<<<<<< HEAD:services/google/index.ts
-  const { apiKey, model } = integrationConfig.googleGemini;
-
-  if (!apiKey) {
-    throw new Error(
-      "Google Gemini API key not configured. Set VITE_GEMINI_API_KEY in your environment."
-    );
-  }
-
-=======
-  const apiKey =
-    getRuntimeEnvValue('GEMINI_API_KEY') ??
-    getRuntimeEnvValue('API_KEY');
-
-  if (!apiKey) {
-    throw new Error(
-      "No Gemini API key found. Set window.__OPS_RUNTIME_ENV__.GEMINI_API_KEY before loading the app, or store it via runtime-config.js."
-    );
-  }
-
-  cacheRuntimeEnvValue('GEMINI_API_KEY', apiKey);
->>>>>>> 438480d (Replace Vite toolchain with esbuild):new_src/services/google/index.ts
-  ai = new GoogleGenAI({ apiKey });
-
-  const systemInstruction = `You are "Chattia," a professional, helpful, and empathetic AI assistant for OPS (Online Presence Solutions). Your primary goal is to understand the user's needs and guide them to the correct OPS service.
+const systemInstruction = `You are "Chattia," a professional, helpful, and empathetic AI assistant for OPS (Online Presence Solutions). Your primary goal is to understand the user's needs and guide them to the correct OPS service.
 
       Your capabilities:
       - You are an expert on OPS's four main services: Business Operations, Contact Center, IT Support, and Professionals.
@@ -54,27 +26,34 @@ const initializeChat = () => {
       - Maintain a friendly and professional tone at all times.
       - You MUST NOT ask for or store any Personally Identifiable Information (PII).`;
 
+const initializeChat = () => {
+  const { apiKey, model } = integrationConfig.googleGemini;
+
+  if (!apiKey) {
+    throw new Error(
+      'Google Gemini API key not configured. Provide GEMINI_API_KEY via window.__OPS_RUNTIME_ENV__ or services/integrationConfig.ts.'
+    );
+  }
+
+  ai = new GoogleGenAI({ apiKey });
   chat = ai.chats.create({
     model,
     config: {
-        systemInstruction,
+      systemInstruction,
     },
   });
 };
 
 const streamChatResponse: AIService['streamChatResponse'] = async (
-  history: ChatMessage[],
+  _history: ChatMessage[],
   newMessage: string,
   onChunk: (chunk: string) => void
 ) => {
   try {
-    // Initialize the chat session on the first message.
     if (!chat) {
       initializeChat();
     }
-    
-    // The Gemini API currently uses the whole history. We send the new message.
-    // The `chat` object maintains the history on the backend.
+
     const responseStream = await chat!.sendMessageStream({ message: newMessage });
 
     let fullResponse = '';
@@ -83,18 +62,16 @@ const streamChatResponse: AIService['streamChatResponse'] = async (
       onChunk(fullResponse);
     }
   } catch (error) {
-    console.error("Error with Google AI service:", error);
+    console.error('Error with Google AI service:', error);
     onChunk("Sorry, I'm having trouble connecting to the AI service right now. Please try again later.");
-    // Reset chat session on error to force re-initialization on next attempt.
     resetChat();
   }
 };
 
 const resetChat: AIService['resetChat'] = () => {
-  // Setting chat to null will force re-initialization on the next message.
   chat = null;
   ai = null;
-  console.log("Google AI chat session reset.");
+  console.log('Google AI chat session reset.');
 };
 
 export { streamChatResponse, resetChat };
