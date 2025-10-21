@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:package",
+    "test:package": "node ./scripts/validate-package-json.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",
