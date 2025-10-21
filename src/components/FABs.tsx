@@ -1,19 +1,50 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Icon from './Icon';
-import type { IconName, ModalType } from '../types';
+import type { IconName, ModalType, Language } from '../types';
+import { GlobalContext } from '../contexts/GlobalContext';
+
+type FABModalType = Exclude<ModalType, 'SERVICE' | 'SEARCH' | 'TERMS' | 'COOKIES' | null>;
 
 interface FABsProps {
-  onOpenModal: (type: ModalType) => void;
+  onOpenModal: (type: FABModalType) => void;
+  onScrollToTop: () => void;
+  onScrollToServices: () => void;
 }
 
-const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
+type FABActionKey = 'CONTACT' | 'JOIN' | 'CHAT' | 'SERVICES' | 'HOME';
+
+type FABAction = {
+  key: FABActionKey;
+  icon: IconName;
+  title: string;
+  onTrigger: () => void;
+};
+
+const FABs: React.FC<FABsProps> = ({ onOpenModal, onScrollToTop, onScrollToServices }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const fabActions: Array<{ type: Exclude<ModalType, 'SERVICE' | 'SEARCH' | null>; icon: IconName; title: string }> = [
-    { type: 'CHAT', icon: 'chat', title: 'Chat with Chattia' },
-    { type: 'JOIN', icon: 'user-plus', title: 'Join Our Team' },
-    { type: 'CONTACT', icon: 'envelope', title: 'Contact Us' },
+  const { language } = useContext(GlobalContext);
+
+  const labels: Record<FABActionKey, Record<Language, string>> = {
+    CONTACT: { en: 'Contact Us', es: 'Contáctenos' },
+    JOIN: { en: 'Join Our Team', es: 'Únete a nuestro equipo' },
+    CHAT: { en: 'Chat with Chattia', es: 'Chatea con Chattia' },
+    SERVICES: { en: 'View Services', es: 'Ver servicios' },
+    HOME: { en: 'Back to top', es: 'Volver arriba' },
+  } as const;
+
+  const baseActions: Array<Omit<FABAction, 'title'>> = [
+    { key: 'CONTACT', icon: 'envelope', onTrigger: () => onOpenModal('CONTACT') },
+    { key: 'JOIN', icon: 'user-plus', onTrigger: () => onOpenModal('JOIN') },
+    { key: 'CHAT', icon: 'chat', onTrigger: () => onOpenModal('CHAT') },
+    { key: 'SERVICES', icon: 'layers', onTrigger: onScrollToServices },
+    { key: 'HOME', icon: 'home', onTrigger: onScrollToTop },
   ];
+
+  const fabActions: FABAction[] = baseActions.map((action) => ({
+    ...action,
+    title: labels[action.key][language],
+  }));
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -24,14 +55,15 @@ const FABs: React.FC<FABsProps> = ({ onOpenModal }) => {
           <div className="flex flex-col items-center mb-4 space-y-3 animate-fade-in-up-fast">
             {fabActions.map((action, index) => (
               <button
-                key={action.type}
+                key={action.key}
                 style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => {
-                  onOpenModal(action.type);
+                  action.onTrigger();
                   setIsOpen(false);
                 }}
                 className="w-14 h-14 rounded-full bg-accent text-white shadow-lg flex items-center justify-center transition-transform transform hover:scale-110 opacity-0"
                 title={action.title}
+                aria-label={action.title}
               >
                 <Icon name={action.icon} className="w-5 h-5" />
               </button>

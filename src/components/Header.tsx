@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../contexts/GlobalContext';
 import type { ModalType, ServiceKey } from '../types';
+import LanguageToggle from './LanguageToggle';
 import Icon from './Icon';
 
 interface HeaderProps {
@@ -11,10 +12,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNavigateToCompliance }) => {
   const { language, setLanguage, theme, setTheme } = useContext(GlobalContext);
-
   const toggleLanguage = () => setLanguage(language === 'en' ? 'es' : 'en');
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
-
   const navLinks: { key: ServiceKey; en: string; es: string }[] = [
     { key: 'ops', en: 'Business Operations', es: 'Operaciones' },
     { key: 'cc', en: 'Contact Center', es: 'Centro de Contacto' },
@@ -46,17 +45,15 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNav
           {complianceLabel}
         </button>
       </nav>
-      <div className="flex items-center gap-2">
-        <button 
-          onClick={() => onOpenModal('SEARCH')} 
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => onOpenModal('SEARCH')}
           title="Search Services"
           className="bg-primary/80 text-white rounded-md py-1.5 px-3 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none"
         >
           <Icon name="search" className="w-4 h-4" />
         </button>
-        <button onClick={toggleLanguage} className="bg-primary text-white rounded-md py-1.5 px-4 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none">
-          {language === 'en' ? 'ES' : 'EN'}
-        </button>
+        <LanguageToggle />
         <button onClick={toggleTheme} className="bg-primary text-white rounded-md py-1.5 px-4 font-bold text-base transition-colors duration-200 hover:bg-accent focus:bg-accent outline-none capitalize">
           {theme === 'light' ? 'Dark' : 'Light'}
         </button>
