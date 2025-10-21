@@ -4,14 +4,14 @@ import { COMPLIANCE_CHECKLIST } from '../data/compliance';
 
 const copy = {
   en: {
-    heading: 'OPS CySec Core compliance matrix',
+    heading: 'OPS CySec Core governance snapshot',
     description:
-      'End-to-end governance that unifies OPS CySec Core with internationalization, accessibility, performance, and domain controls for the e-commerce and chat applications.',
+      'High-level guardrails that remain safe for public display. The full OPS CySec Core runbook lives in OPS-cysec-core-runbook.md at the repository root and requires security approval before sharing.',
   },
   es: {
-    heading: 'Matriz de cumplimiento OPS CySec Core',
+    heading: 'Instantánea de gobernanza OPS CySec Core',
     description:
-      'Gobernanza de extremo a extremo que une OPS CySec Core con controles de internacionalización, accesibilidad, rendimiento y dominio para las aplicaciones de comercio y chat.',
+      'Controles de alto nivel aptos para exhibición pública. El runbook completo de OPS CySec Core reside en OPS-cysec-core-runbook.md en la raíz del repositorio y requiere aprobación de seguridad antes de compartirse.',
   },
 };
 
