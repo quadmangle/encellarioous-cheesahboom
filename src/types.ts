@@ -13,7 +13,7 @@ export type IconName = 'square' | 'chat' | 'user-plus' | 'envelope' | 'close' | 
 
 export type ServiceKey = 'ops' | 'cc' | 'it' | 'pro';
 
-export type ModalType = 'SERVICE' | 'SEARCH' | 'CHAT' | 'JOIN' | 'CONTACT' | null;
+export type ModalType = 'SERVICE' | 'SEARCH' | 'CHAT' | 'JOIN' | 'CONTACT' | 'TERMS' | 'COOKIES' | null;
 
 export interface ModalData {
   title: string;
@@ -39,6 +39,12 @@ export interface ModalProps {
   onClose: () => void;
   showBackdrop?: boolean;
   serviceKey?: ServiceKey;
+}
+
+export interface CookiePreferences {
+  necessary: boolean;
+  analytics: boolean;
+  marketing: boolean;
 }
 
 export interface ChatMessage {
