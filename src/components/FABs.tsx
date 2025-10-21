@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Icon from './Icon';
-import type { IconName, ModalType } from '../types';
+import type { IconName, ModalType, Language } from '../types';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 type FABModalType = Exclude<ModalType, 'SERVICE' | 'SEARCH' | 'TERMS' | 'COOKIES' | null>;
 
@@ -10,8 +11,10 @@ interface FABsProps {
   onScrollToServices: () => void;
 }
 
+type FABActionKey = 'CONTACT' | 'JOIN' | 'CHAT' | 'SERVICES' | 'HOME';
+
 type FABAction = {
-  key: 'CONTACT' | 'JOIN' | 'CHAT' | 'SERVICES' | 'HOME';
+  key: FABActionKey;
   icon: IconName;
   title: string;
   onTrigger: () => void;
@@ -20,13 +23,28 @@ type FABAction = {
 const FABs: React.FC<FABsProps> = ({ onOpenModal, onScrollToTop, onScrollToServices }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const fabActions: FABAction[] = [
-    { key: 'CONTACT', icon: 'envelope', title: 'Contact Us', onTrigger: () => onOpenModal('CONTACT') },
-    { key: 'JOIN', icon: 'user-plus', title: 'Join Our Team', onTrigger: () => onOpenModal('JOIN') },
-    { key: 'CHAT', icon: 'chat', title: 'Chat with Chattia', onTrigger: () => onOpenModal('CHAT') },
-    { key: 'SERVICES', icon: 'layers', title: 'View Services', onTrigger: onScrollToServices },
-    { key: 'HOME', icon: 'home', title: 'Back to top', onTrigger: onScrollToTop },
+  const { language } = useContext(GlobalContext);
+
+  const labels: Record<FABActionKey, Record<Language, string>> = {
+    CONTACT: { en: 'Contact Us', es: 'Contáctenos' },
+    JOIN: { en: 'Join Our Team', es: 'Únete a nuestro equipo' },
+    CHAT: { en: 'Chat with Chattia', es: 'Chatea con Chattia' },
+    SERVICES: { en: 'View Services', es: 'Ver servicios' },
+    HOME: { en: 'Back to top', es: 'Volver arriba' },
+  } as const;
+
+  const baseActions: Array<Omit<FABAction, 'title'>> = [
+    { key: 'CONTACT', icon: 'envelope', onTrigger: () => onOpenModal('CONTACT') },
+    { key: 'JOIN', icon: 'user-plus', onTrigger: () => onOpenModal('JOIN') },
+    { key: 'CHAT', icon: 'chat', onTrigger: () => onOpenModal('CHAT') },
+    { key: 'SERVICES', icon: 'layers', onTrigger: onScrollToServices },
+    { key: 'HOME', icon: 'home', onTrigger: onScrollToTop },
   ];
+
+  const fabActions: FABAction[] = baseActions.map((action) => ({
+    ...action,
+    title: labels[action.key][language],
+  }));
 
   const toggleMenu = () => setIsOpen(!isOpen);
 

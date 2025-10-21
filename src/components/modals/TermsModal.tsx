@@ -4,6 +4,7 @@ import { useMovable } from '../../hooks/useMovable';
 import type { ModalProps } from '../../types';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import Icon from '../Icon';
+import LanguageToggle from '../LanguageToggle';
 
 const TermsModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop = true }) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -133,14 +134,18 @@ const TermsModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop = true
             <h2 className="text-xl font-semibold">{content.title}</h2>
             <p className="text-xs text-gray-500 dark:text-gray-300">{content.updated}</p>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-2xl leading-none text-accent hover:text-primary transition-colors"
-            aria-label={content.close}
-          >
-            &times;
-          </button>
+          <div className="flex items-center gap-3">
+            <LanguageToggle size="sm" />
+            <button
+              type="button"
+              onClick={onClose}
+              onMouseDown={(event) => event.stopPropagation()}
+              className="text-2xl leading-none text-accent hover:text-primary transition-colors"
+              aria-label={content.close}
+            >
+              &times;
+            </button>
+          </div>
         </div>
         <div className="px-6 py-6 space-y-5 max-h-[70vh] overflow-y-auto">
           <p className="text-sm text-gray-700 dark:text-gray-300">{content.intro}</p>

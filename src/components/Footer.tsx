@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import type { ModalType } from '../types';
+import { GlobalContext } from '../contexts/GlobalContext';
 
 interface FooterProps {
   onOpenModal: (type: Exclude<ModalType, 'SERVICE' | 'SEARCH' | null>) => void;
 }
 
 const Footer: React.FC<FooterProps> = ({ onOpenModal }) => {
+  const { language } = useContext(GlobalContext);
+
+  const copy = {
+    en: {
+      feedback: 'User Feedback',
+      terms: 'T & C',
+      cookies: 'Cookie Consent',
+    },
+    es: {
+      feedback: 'Comentarios de usuarios',
+      terms: 'Términos y Condiciones',
+      cookies: 'Consentimiento de cookies',
+    },
+  } as const;
+
+  const labels = copy[language];
+
   return (
     <footer className="w-full bg-white/20 dark:bg-dark-footer/50 backdrop-blur-lg text-gray-800 dark:text-white text-sm fixed left-0 bottom-0 z-40 rounded-t-2xl border-t border-white/30 dark:border-white/10">
       <div className="w-full max-w-6xl mx-auto flex items-center justify-between p-4 sm:px-8">
@@ -16,21 +34,21 @@ const Footer: React.FC<FooterProps> = ({ onOpenModal }) => {
             onClick={() => onOpenModal('CONTACT')}
             className="hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded"
           >
-            User Feedback
+            {labels.feedback}
           </button>
           <button
             type="button"
             onClick={() => onOpenModal('TERMS')}
             className="hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded"
           >
-            T &amp; C
+            {labels.terms}
           </button>
           <button
             type="button"
             onClick={() => onOpenModal('COOKIES')}
             className="hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 rounded"
           >
-            Cookie Consent
+            {labels.cookies}
           </button>
         </div>
       </div>

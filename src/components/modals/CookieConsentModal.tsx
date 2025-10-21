@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import ModalWrapper from './ModalWrapper';
 import { useMovable } from '../../hooks/useMovable';
 import Icon from '../Icon';
+import LanguageToggle from '../LanguageToggle';
 import { GlobalContext } from '../../contexts/GlobalContext';
 import type { CookiePreferences, ModalProps } from '../../types';
 
@@ -125,20 +126,22 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
         className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-3xl shadow-2xl overflow-hidden border border-white/40 dark:border-white/10"
       >
         <div ref={headerRef} className="flex items-center justify-between px-6 py-4 bg-gray-100 dark:bg-gray-800 cursor-move">
-          <div>
-            <h2 className="text-lg font-semibold">{content.title}</h2>
-            <p className="text-xs text-gray-500 dark:text-gray-300">{content.description}</p>
+          <h2 className="text-lg font-semibold">{content.title}</h2>
+          <div className="flex items-center gap-3">
+            <LanguageToggle size="sm" />
+            <button
+              type="button"
+              onClick={onClose}
+              onMouseDown={(event) => event.stopPropagation()}
+              className="text-2xl leading-none text-accent hover:text-primary transition-colors"
+              aria-label={content.actions.close}
+            >
+              &times;
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="text-2xl leading-none text-accent hover:text-primary transition-colors"
-            aria-label={content.actions.close}
-          >
-            &times;
-          </button>
         </div>
         <div className="px-6 py-6 space-y-5 max-h-[70vh] overflow-y-auto">
+          <p className="text-sm text-gray-700 dark:text-gray-300">{content.description}</p>
           {(Object.keys(content.categories) as PreferenceKey[]).map((key) => {
             const category = content.categories[key];
             const isLocked = key === 'necessary';
