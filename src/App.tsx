@@ -8,17 +8,30 @@ import SearchModal from './components/modals/SearchModal';
 import ChatbotModal from './components/modals/ChatbotModal';
 import JoinModal from './components/modals/JoinModal';
 import ContactModal from './components/modals/ContactModal';
+import TermsModal from './components/modals/TermsModal';
+import CookieConsentModal from './components/modals/CookieConsentModal';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
+import CookieConsent from './components/CookieConsent';
 import { GlobalContext } from './contexts/GlobalContext';
-import type { ModalType, ServiceKey } from './types';
+import type { CookiePreferences, ModalType, ServiceKey } from './types';
+
+const COOKIE_STORAGE_KEY = 'ops-cookie-preferences-v1';
+
+const DEFAULT_COOKIE_PREFERENCES: CookiePreferences = {
+  necessary: true,
+  analytics: false,
+  marketing: false,
+};
 
 const App: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [selectedService, setSelectedService] = useState<ServiceKey | undefined>(undefined);
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
+  const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>(DEFAULT_COOKIE_PREFERENCES);
+  const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const { theme } = useContext(GlobalContext);
 
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
@@ -49,6 +62,31 @@ const App: React.FC = () => {
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    try {
+      const storedPreferences = window.localStorage.getItem(COOKIE_STORAGE_KEY);
+      if (storedPreferences) {
+        const parsed = JSON.parse(storedPreferences) as Partial<CookiePreferences>;
+        setCookiePreferences({
+          necessary: true,
+          analytics: Boolean(parsed?.analytics),
+          marketing: Boolean(parsed?.marketing),
+        });
+        setIsCookieBannerVisible(false);
+      } else {
+        setIsCookieBannerVisible(true);
+      }
+    } catch (error) {
+      console.error('Unable to load cookie preferences', error);
+      setCookiePreferences(DEFAULT_COOKIE_PREFERENCES);
+      setIsCookieBannerVisible(true);
+    }
+  }, []);
+
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
     const sectionId = `service-section-${serviceKey}`;
@@ -64,6 +102,59 @@ const App: React.FC = () => {
     }
   };
 
+  const persistCookiePreferences = (preferences: CookiePreferences, hideBanner = true) => {
+    const normalized: CookiePreferences = {
+      necessary: true,
+      analytics: Boolean(preferences.analytics),
+      marketing: Boolean(preferences.marketing),
+    };
+
+    setCookiePreferences(normalized);
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.localStorage.setItem(COOKIE_STORAGE_KEY, JSON.stringify(normalized));
+      } catch (error) {
+        console.error('Unable to persist cookie preferences', error);
+      }
+    }
+
+    if (hideBanner) {
+      setIsCookieBannerVisible(false);
+    }
+  };
+
+  const handleAcceptAllCookies = () => {
+    persistCookiePreferences({ necessary: true, analytics: true, marketing: true });
+    if (activeModal === 'COOKIES') {
+      handleCloseModal();
+    }
+  };
+
+  const handleRejectCookies = () => {
+    persistCookiePreferences({ necessary: true, analytics: false, marketing: false });
+    if (activeModal === 'COOKIES') {
+      handleCloseModal();
+    }
+  };
+
+  const handleSaveCookiePreferences = (preferences: CookiePreferences) => {
+    persistCookiePreferences(preferences);
+    if (activeModal === 'COOKIES') {
+      handleCloseModal();
+    }
+  };
+
+  const scrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToServices = () => {
+    handleServiceClick('ops');
+  };
+
   return (
     <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
@@ -74,9 +165,19 @@ const App: React.FC = () => {
           <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
           <ServiceBreakdown />
         </main>
-        <Footer />
+        <CookieConsent
+          isVisible={isCookieBannerVisible}
+          onAcceptAll={handleAcceptAllCookies}
+          onDecline={handleRejectCookies}
+          onManage={() => handleOpenModal('COOKIES')}
+        />
+        <Footer onOpenModal={(type) => handleOpenModal(type)} />
         <MobileNav onOpenModal={handleOpenModal} onToggleServicesMenu={toggleServicesMenu} />
-        <FABs onOpenModal={handleOpenModal} />
+        <FABs
+          onOpenModal={(type) => handleOpenModal(type)}
+          onScrollToTop={scrollToTop}
+          onScrollToServices={scrollToServices}
+        />
       </div>
 
       <ServicesMenu 
@@ -108,6 +209,18 @@ const App: React.FC = () => {
         isOpen={activeModal === 'CONTACT'}
         onClose={handleCloseModal}
         showBackdrop={false}
+      />
+      <TermsModal
+        isOpen={activeModal === 'TERMS'}
+        onClose={handleCloseModal}
+      />
+      <CookieConsentModal
+        isOpen={activeModal === 'COOKIES'}
+        onClose={handleCloseModal}
+        preferences={cookiePreferences}
+        onSave={handleSaveCookiePreferences}
+        onAcceptAll={handleAcceptAllCookies}
+        onRejectAll={handleRejectCookies}
       />
     </div>
   );
