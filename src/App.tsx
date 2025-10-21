@@ -12,6 +12,7 @@ import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
+import ComplianceChecklist from './components/ComplianceChecklist';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { ModalType, ServiceKey } from './types';
 
@@ -38,6 +39,13 @@ const App: React.FC = () => {
 
   const toggleServicesMenu = () => {
     setIsServicesMenuOpen(!isServicesMenuOpen);
+  };
+
+  const handleNavigateToCompliance = () => {
+    const targetElement = document.getElementById('compliance-section');
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   useEffect(() => {
@@ -68,14 +76,23 @@ const App: React.FC = () => {
     <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
       <div className="relative z-10">
-        <Header onOpenModal={handleOpenModal} onNavigateToService={handleServiceClick} />
+        <Header
+          onOpenModal={handleOpenModal}
+          onNavigateToService={handleServiceClick}
+          onNavigateToCompliance={handleNavigateToCompliance}
+        />
         <main>
           <Hero onPrimaryAction={() => handleOpenModal('CONTACT')} />
           <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
           <ServiceBreakdown />
+          <ComplianceChecklist />
         </main>
         <Footer />
-        <MobileNav onOpenModal={handleOpenModal} onToggleServicesMenu={toggleServicesMenu} />
+        <MobileNav
+          onOpenModal={handleOpenModal}
+          onToggleServicesMenu={toggleServicesMenu}
+          onNavigateToCompliance={handleNavigateToCompliance}
+        />
         <FABs onOpenModal={handleOpenModal} />
       </div>
 

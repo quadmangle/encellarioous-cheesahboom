@@ -6,9 +6,10 @@ import Icon from './Icon';
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
   onNavigateToService: (key: ServiceKey) => void;
+  onNavigateToCompliance: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNavigateToCompliance }) => {
   const { language, setLanguage, theme, setTheme } = useContext(GlobalContext);
 
   const toggleLanguage = () => setLanguage(language === 'en' ? 'es' : 'en');
@@ -20,6 +21,8 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => 
     { key: 'it', en: 'IT Support', es: 'Soporte IT' },
     { key: 'pro', en: 'Professionals', es: 'Profesionales' },
   ];
+
+  const complianceLabel = language === 'en' ? 'OPS CySec Core' : 'OPS CySec Core';
 
   return (
     <header className="w-full max-w-6xl mx-auto flex items-center justify-between p-5 sm:px-8 font-semibold bg-transparent">
@@ -35,6 +38,13 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService }) => 
             {link[language]}
           </button>
         ))}
+        <button
+          type="button"
+          onClick={onNavigateToCompliance}
+          className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
+        >
+          {complianceLabel}
+        </button>
       </nav>
       <div className="flex items-center gap-2">
         <button 

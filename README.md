@@ -9,6 +9,7 @@ Ops Online Support is a React single-page application that compiles to static as
 - Inline SVG icons remove the need for external icon CDNs, keeping the page self-contained.
 - The Google Gemini escalation layer ships as a guided placeholder while local-first stacks (Chattia7, TinyML, Cloudflare hooks) remain pluggable.
 - Runtime secrets can be injected by assigning values to `window.__OPS_RUNTIME_ENV__` before `assets/app.js` executes. This keeps credentials out of the bundle and avoids environment-specific bundler APIs.
+- OPS CySec Core compliance matrix renders from `src/data/compliance.ts`, surfacing dual-app governance requirements in both English and Spanish inside `ComplianceChecklist`.
 
 ## Building
 
@@ -29,6 +30,10 @@ After running the build you can open `index.html` directly or host it from any s
 ## Type Checking
 
 Run `npm run typecheck` to execute a `tsc --noEmit` pass once dependencies are installed.
+
+## Package Manifest Tests
+
+Execute `npm run test` to validate that `package.json` contains the required metadata, npm scripts, and dependency declarations. The manifest validator can also be run directly via `npm run test:package` when updating tooling or adding dependencies.
 
 ## Directory Overview
 
