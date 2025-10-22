@@ -16,8 +16,9 @@
  */
 import type { ChatMessage } from '../../types';
 import type { AIService } from "../aiService";
+import { integrationConfig } from '../integrationConfig';
 
-const CLOUDFLARE_WORKER_URL = ''; // <-- Add your Cloudflare Worker URL here
+const { workerUrl: CLOUDFLARE_WORKER_URL } = integrationConfig.cloudflare;
 
 const streamChatResponse: AIService['streamChatResponse'] = async (
   history: ChatMessage[],
@@ -25,7 +26,8 @@ const streamChatResponse: AIService['streamChatResponse'] = async (
   onChunk: (chunk: string) => void
 ) => {
   if (!CLOUDFLARE_WORKER_URL) {
-    const msg = "Cloudflare AI service is not configured. Please set your Worker URL in `services/cloudflare/index.ts`.";
+    const msg =
+      "Cloudflare AI service is not configured. Provide CLOUDFLARE_WORKER_URL via window.__OPS_RUNTIME_ENV__ or src/services/integrationConfig.ts.";
     console.warn(msg);
     onChunk(msg);
     return;
