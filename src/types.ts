@@ -9,7 +9,21 @@ export interface GlobalContextType {
   setTheme: (theme: Theme) => void;
 }
 
-export type IconName = 'square' | 'chat' | 'user-plus' | 'envelope' | 'close' | 'plus' | 'home' | 'layers' | 'search' | 'microphone' | 'check-circle' | 'expand' | 'paper-plane';
+export type IconName =
+  | 'square'
+  | 'chat'
+  | 'user-plus'
+  | 'envelope'
+  | 'close'
+  | 'plus'
+  | 'home'
+  | 'layers'
+  | 'search'
+  | 'microphone'
+  | 'check-circle'
+  | 'expand'
+  | 'paper-plane'
+  | 'lock';
 
 export type ServiceKey = 'ops' | 'cc' | 'it' | 'pro';
 
