@@ -1,0 +1,43 @@
+{
+  "id": "/?source=pwa",
+  "name": "OPS Online Support Platform",
+  "short_name": "OPS Support",
+  "description": "Progressive web experience for the OPS customer care and commerce enablement suite.",
+  "lang": "en",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#13162a",
+  "theme_color": "#00c4ff",
+  "categories": ["business", "productivity", "shopping"],
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/public/icons/ops-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/public/icons/ops-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Contact Support",
+      "short_name": "Support",
+      "description": "Jump to concierge assistance to resolve operational blockers.",
+      "url": "/support"
+    },
+    {
+      "name": "OPS Playbooks",
+      "short_name": "Playbooks",
+      "description": "Access the OPS cyber, UX, and automation runbooks offline.",
+      "url": "/playbooks"
+    }
+  ],
+  "prefer_related_applications": false
+}

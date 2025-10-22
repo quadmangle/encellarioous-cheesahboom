@@ -39,5 +39,22 @@ await build({
   }
 });
 
+await build({
+  entryPoints: ['src/service-worker.ts'],
+  bundle: true,
+  outfile: resolve('service-worker.js'),
+  format: 'esm',
+  platform: 'browser',
+  target: ['es2020'],
+  minify: true,
+  sourcemap: false,
+  loader: {
+    '.ts': 'ts'
+  },
+  define: {
+    'process.env.NODE_ENV': '"production"'
+  }
+});
+
 await copyFile('styles/app.css', resolve(outDir, 'app.css'));
 await copyOptionalAsset('ops_bm25_corpus.jsonl', resolve(outDir, 'ops_bm25_corpus.jsonl'));
