@@ -63,7 +63,7 @@ export const integrationConfig = {
     /**
      * Location of the JSONL corpus used for BM25 retrieval.
      */
-    corpusUrl: readRuntimeValue('KB_CORPUS_URL') ?? '/ops_bm25_corpus.jsonl',
+    corpusUrl: readRuntimeValue('KB_CORPUS_URL') ?? './assets/ops_bm25_corpus.jsonl',
   },
   webLLM: {
     /**

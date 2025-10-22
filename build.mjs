@@ -1,5 +1,5 @@
 import { build } from 'esbuild';
-import { mkdir, rm, copyFile } from 'fs/promises';
+import { mkdir, rm, copyFile, cp } from 'fs/promises';
 import { resolve } from 'path';
 
 const outDir = resolve('assets');
@@ -28,3 +28,13 @@ await build({
 });
 
 await copyFile('styles/app.css', resolve(outDir, 'app.css'));
+
+try {
+  await cp(resolve('public'), outDir, { recursive: true });
+} catch (error) {
+  if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+    console.warn('No public directory found to copy static assets from.');
+  } else {
+    throw error;
+  }
+}
