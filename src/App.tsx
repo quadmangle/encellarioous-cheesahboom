@@ -97,6 +97,11 @@ const App: React.FC = () => {
     });
   };
 
+  const handleServiceCardClick = (serviceKey: ServiceKey) => {
+    handleServiceClick(serviceKey);
+    handleOpenModal('SERVICE', serviceKey);
+  };
+
   const persistCookiePreferences = (preferences: CookiePreferences, hideBanner = true) => {
     const normalized: CookiePreferences = {
       necessary: true,
@@ -151,7 +156,7 @@ const App: React.FC = () => {
         />
         <main>
           <Hero onPrimaryAction={() => handleOpenModal('CONTACT')} />
-          <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
+          <ServiceCardsGrid onCardClick={handleServiceCardClick} />
           <ServiceBreakdown
             activeService={activeServicePage}
             sectionRef={servicePageRef}
