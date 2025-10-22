@@ -6,6 +6,7 @@
  * interacting with the in-browser WebLLM engine. It follows a singleton pattern
  * to ensure the heavy model is only initialized once.
  */
+import { integrationConfig } from '../integrationConfig';
 import type { ChatMessage, AIProgress } from '../../types';
 
 // FIX: Declare the 'webllm' global variable, which is loaded from a script tag.
@@ -17,7 +18,7 @@ type EngineStatus = 'uninitialized' | 'loading' | 'ready' | 'error';
 let engine: any = null;
 let status: EngineStatus = 'uninitialized';
 let initializationPromise: Promise<void> | null = null;
-const MODEL_ID = 'gemma-2b-it-q4f32_1';
+const MODEL_ID = integrationConfig.webLLM.modelId;
 
 /**
  * Initializes the WebLLM engine. This is the core of the on-demand strategy.
