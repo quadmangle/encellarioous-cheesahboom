@@ -6,7 +6,7 @@
  * interacting with the in-browser WebLLM engine. It follows a singleton pattern
  * to ensure the heavy model is only initialized once.
  */
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../runtime/integrationConfig';
 import type { ChatMessage, AIProgress } from '../../types';
 import { awaitTinyStackReady } from '../runtimeGlobals';
 

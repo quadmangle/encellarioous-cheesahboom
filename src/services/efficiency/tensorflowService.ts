@@ -1,4 +1,4 @@
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../runtime/integrationConfig';
 
 // services/efficiency/tensorflowService.ts
 /**
