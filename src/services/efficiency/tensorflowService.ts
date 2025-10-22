@@ -1,3 +1,5 @@
+import { integrationConfig } from '../integrationConfig';
+
 // services/efficiency/tensorflowService.ts
 /**
  * TensorFlow.js Service (Singleton)
@@ -21,7 +23,7 @@ let model: any = null;
 let status: ModelStatus = 'uninitialized';
 let initializationPromise: Promise<void> | null = null;
 
-const MODEL_URL = 'https://tfhub.dev/tensorflow/tfjs-model/toxicity/1/default/1';
+const MODEL_URL = integrationConfig.tensorFlow.toxicityModelUrl;
 const THRESHOLD = 0.8;
 
 /**
@@ -43,7 +45,7 @@ export const initialize = (): Promise<void> => {
                 }
                 
                 // Load the model.
-                model = await toxicity.load(THRESHOLD);
+                model = await toxicity.load(THRESHOLD, MODEL_URL);
                 status = 'ready';
                 console.log('TensorFlow.js toxicity model loaded successfully.');
             } catch (error) {
