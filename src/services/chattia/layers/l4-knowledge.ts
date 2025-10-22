@@ -2,7 +2,28 @@ import type { Language } from '../../../types';
 import { BM25 } from '../../efficiency/bm25';
 import type { KnowledgeDocument, KnowledgeHit, KnowledgeResult } from '../types';
 
-const KNOWLEDGE_SOURCE_URL = './ops_bm25_corpus.jsonl';
+const KNOWLEDGE_SOURCE_URLS = ['./ops_bm25_corpus.jsonl', './assets/ops_bm25_corpus.jsonl'];
+
+const fetchKnowledgeCorpus = async (): Promise<string> => {
+  const attempts: Array<{ url: string; error: unknown }> = [];
+
+  for (const url of KNOWLEDGE_SOURCE_URLS) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+      return await response.text();
+    } catch (error) {
+      attempts.push({ url, error });
+    }
+  }
+
+  const detail = attempts
+    .map(({ url, error }) => `${url}: ${error instanceof Error ? error.message : String(error)}`)
+    .join('; ');
+  throw new Error(`Unable to load OPS knowledge corpus from any known location (${detail}).`);
+};
 
 let bm25Index: BM25<string> | null = null;
 let documents: KnowledgeDocument[] = [];
@@ -33,8 +54,7 @@ const ensureKnowledgeCorpus = async () => {
           bm25Index = null;
           return;
         }
-        const response = await fetch(KNOWLEDGE_SOURCE_URL);
-        const text = await response.text();
+        const text = await fetchKnowledgeCorpus();
         const lines = text.split('\n').map((line) => line.trim()).filter(Boolean);
         documents = lines.map((line) => buildDocument(JSON.parse(line)));
         docMap = new Map(documents.map((doc) => [doc.docId, doc]));
