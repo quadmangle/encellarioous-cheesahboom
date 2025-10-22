@@ -8,6 +8,7 @@
  */
 import { integrationConfig } from '../integrationConfig';
 import type { ChatMessage, AIProgress } from '../../types';
+import { awaitTinyStackReady } from '../runtimeGlobals';
 
 // FIX: Declare the 'webllm' global variable, which is loaded from a script tag.
 // This informs TypeScript of its existence and prevents "Cannot find name" errors.
@@ -33,6 +34,7 @@ export const initialize = (onProgress: (progress: AIProgress) => void): Promise<
             status = 'loading';
 
             try {
+                await awaitTinyStackReady();
                 if (typeof webllm === 'undefined') {
                     throw new Error('WebLLM library not loaded.');
                 }

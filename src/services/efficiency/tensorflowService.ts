@@ -13,6 +13,8 @@ import { integrationConfig } from '../integrationConfig';
 declare var tf: any;
 declare var toxicity: any;
 
+import { awaitTinyStackReady } from '../runtimeGlobals';
+
 type ModelStatus = 'uninitialized' | 'loading' | 'ready' | 'error';
 interface ToxicityResult {
     label: string;
@@ -39,6 +41,7 @@ export const initialize = (): Promise<void> => {
             status = 'loading';
 
             try {
+                await awaitTinyStackReady();
                 // Ensure the global `tf` and `toxicity` objects are available.
                 if (typeof tf === 'undefined' || typeof toxicity === 'undefined') {
                     throw new Error('TensorFlow.js or Toxicity library not loaded.');
