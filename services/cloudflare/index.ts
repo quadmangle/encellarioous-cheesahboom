@@ -16,7 +16,7 @@
  */
 import type { ChatMessage } from '../../types';
 import type { AIService } from "../aiService";
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../../src/services/runtime/integrationConfig';
 
 const { workerUrl: CLOUDFLARE_WORKER_URL } = integrationConfig.cloudflare;
 

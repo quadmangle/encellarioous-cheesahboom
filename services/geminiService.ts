@@ -4,7 +4,7 @@ import type { ChatMessage } from '../types';
  * This service provides a simulated chat response for demonstration purposes.
  * It does not connect to any external AI/LLM service.
  * To enable a real AI chatbot, integrate `services/google/index.ts` and
- * configure your keys in `services/integrationConfig.ts` (or set matching
+ * configure your keys in `src/services/runtime/integrationConfig.ts` (or set matching
  * values on `window.__OPS_RUNTIME_ENV__`).
  */
 

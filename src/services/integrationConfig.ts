@@ -2,7 +2,7 @@ type RuntimeEnv = Record<string, string | undefined>;
 
 declare global {
   // eslint-disable-next-line no-var
-  var __OPS_RUNTIME_ENV__?: RuntimeEnv;
+  var __OPS_RUNTIME_ENV__: RuntimeEnv | undefined;
   interface Window {
     __OPS_RUNTIME_ENV__?: RuntimeEnv;
   }
@@ -63,7 +63,7 @@ export const integrationConfig = {
     /**
      * Location of the JSONL corpus used for BM25 retrieval.
      */
-    corpusUrl: readRuntimeValue('KB_CORPUS_URL') ?? '/ops_bm25_corpus.jsonl',
+    corpusUrl: readRuntimeValue('KB_CORPUS_URL') ?? './assets/ops_bm25_corpus.jsonl',
   },
   webLLM: {
     /**
