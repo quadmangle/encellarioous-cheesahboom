@@ -1,6 +1,6 @@
 import type { Language } from '../../../types';
 import { BM25 } from '../../efficiency/bm25';
-import { integrationConfig } from '../../integrationConfig';
+import { integrationConfig } from '../../../src/services/runtime/integrationConfig';
 import type { KnowledgeDocument, KnowledgeHit, KnowledgeResult } from '../types';
 
 const KNOWLEDGE_SOURCE_URL = integrationConfig.knowledgeBase.corpusUrl;
