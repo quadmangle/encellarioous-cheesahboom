@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-declare const self: ServiceWorkerGlobalScope;
+const sw = self as unknown as ServiceWorkerGlobalScope;
 
 const VERSION = 'ops-pwa-v2';
 const APP_SHELL_CACHE = `${VERSION}-shell`;
@@ -16,16 +16,16 @@ const PRECACHE_URLS: string[] = [
   '/public/icons/ops-icon.svg'
 ];
 
-self.addEventListener('install', (event) => {
+sw.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(APP_SHELL_CACHE)
       .then((cache) => cache.addAll(PRECACHE_URLS))
-      .then(() => self.skipWaiting())
+      .then(() => sw.skipWaiting())
   );
 });
 
-self.addEventListener('activate', (event) => {
+sw.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
@@ -36,7 +36,7 @@ self.addEventListener('activate', (event) => {
             .map((key) => caches.delete(key))
         )
       )
-      .then(() => self.clients.claim())
+      .then(() => sw.clients.claim())
   );
 });
 
@@ -87,7 +87,7 @@ const cacheFirst = async (request: Request, cacheName: string) => {
   return response;
 };
 
-self.addEventListener('fetch', (event) => {
+sw.addEventListener('fetch', (event) => {
   const { request } = event;
 
   if (request.method !== 'GET') {
@@ -107,7 +107,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (requestUrl.origin === self.location.origin) {
+  if (requestUrl.origin === sw.location.origin) {
     if (requestUrl.pathname.startsWith('/assets/')) {
       event.respondWith(staleWhileRevalidate(request, RUNTIME_CACHE));
       return;
@@ -136,8 +136,8 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(staleWhileRevalidate(request, RUNTIME_CACHE));
 });
 
-self.addEventListener('message', (event) => {
+sw.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
+    sw.skipWaiting();
   }
 });
