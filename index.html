@@ -40,6 +40,54 @@
       }
     </script>
     <link rel="stylesheet" href="./assets/app.css" />
+    <script>
+      (() => {
+        const SUPPORTED_STACKS = ['google', 'cloudflare', 'tinyml', 'chattia7'];
+        const FALLBACK_STACK = 'chattia7';
+        const currentStack = window.__ACTIVE_SERVICE_STACK__;
+
+        // Persist the resolved stack on the global scope so the TypeScript layer can read it.
+        const activeStack = SUPPORTED_STACKS.includes(currentStack)
+          ? currentStack
+          : FALLBACK_STACK;
+        window.__ACTIVE_SERVICE_STACK__ = activeStack;
+
+        const tinyStackTargets = new Set(['tinyml', 'chattia7']);
+        const shouldLoadTinyStack = tinyStackTargets.has(activeStack);
+
+        // CDN references documented by the providers:
+        // - WebLLM: https://mlc.ai/web-llm/ (via jsDelivr package @mlc-ai/web-llm)
+        // - TensorFlow.js: https://www.tensorflow.org/js/guide/importing#via_script_tags
+        // - Toxicity model: https://github.com/tensorflow/tfjs-models/tree/master/toxicity
+        const cdnScripts = shouldLoadTinyStack
+          ? [
+              'https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.42/lib/tvmjs_runtime.wasi.js',
+              'https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.42/lib/web-llm.js',
+              'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.18.0/dist/tf.min.js',
+              'https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity@1.3.2/dist/toxicity.min.js',
+            ]
+          : [];
+
+        window.__tinyStackReady__ = cdnScripts.reduce(
+          (promise, src) =>
+            promise.then(
+              () =>
+                new Promise((resolve, reject) => {
+                  const script = document.createElement('script');
+                  script.src = src;
+                  script.async = false;
+                  script.onload = () => resolve();
+                  script.onerror = (event) => {
+                    console.error('Failed to load Tiny stack dependency:', src, event);
+                    reject(event);
+                  };
+                  document.head.appendChild(script);
+                })
+            ),
+          Promise.resolve()
+        );
+      })();
+    </script>
     <script type="module" src="./assets/app.js"></script>
   </head>
   <body>
