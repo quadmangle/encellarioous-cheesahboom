@@ -88,6 +88,7 @@ const App: React.FC = () => {
     }
   }, []);
 
+<<<<<<< HEAD
   const scrollToTop = () => {
     if (typeof window === 'undefined') {
       return;
@@ -106,23 +107,36 @@ const App: React.FC = () => {
       return;
     }
 
+=======
+>>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
   const handleScrollToTop = () => {
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
+<<<<<<< HEAD
   const handleScrollToServices = () => {
     setIsServicesMenuOpen(false);
 
     scrollToServiceSection();
   };
 
+=======
+>>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
 
     scrollToServices();
+  };
+
+  const handleScrollToServices = () => {
+    if (!servicePageRef.current) {
+      return;
+    }
+
+    servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
@@ -198,19 +212,28 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
+<<<<<<< HEAD
         <Footer
           onOpenModal={handleOpenModal}
           onScrollToTop={scrollToTop}
           onScrollToServices={scrollToServices}
         />
+=======
+        <Footer onOpenModal={handleOpenModal} />
+>>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
         <FABs
           onOpenModal={handleOpenModal}
+<<<<<<< HEAD
           onScrollToTop={scrollToTop}
           onScrollToServices={scrollToServices}
+=======
+          onScrollToTop={handleScrollToTop}
+          onScrollToServices={handleScrollToServices}
+>>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
         />
       </div>
 
