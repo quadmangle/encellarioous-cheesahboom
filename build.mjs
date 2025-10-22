@@ -1,8 +1,20 @@
 import { build } from 'esbuild';
-import { mkdir, rm, copyFile, cp } from 'fs/promises';
+import { mkdir, rm, copyFile } from 'fs/promises';
 import { resolve } from 'path';
 
 const outDir = resolve('assets');
+
+const copyOptionalAsset = async (source, destination) => {
+  try {
+    await copyFile(source, destination);
+  } catch (error) {
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
+      console.warn(`Skipping optional asset ${source} because it does not exist.`);
+      return;
+    }
+    throw error;
+  }
+};
 
 await rm(outDir, { recursive: true, force: true });
 await mkdir(outDir, { recursive: true });
@@ -28,13 +40,4 @@ await build({
 });
 
 await copyFile('styles/app.css', resolve(outDir, 'app.css'));
-
-try {
-  await cp(resolve('public'), outDir, { recursive: true });
-} catch (error) {
-  if (error && typeof error === 'object' && 'code' in error && error.code === 'ENOENT') {
-    console.warn('No public directory found to copy static assets from.');
-  } else {
-    throw error;
-  }
-}
+await copyOptionalAsset('ops_bm25_corpus.jsonl', resolve(outDir, 'ops_bm25_corpus.jsonl'));
