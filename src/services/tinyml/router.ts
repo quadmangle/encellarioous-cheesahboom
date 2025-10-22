@@ -15,6 +15,11 @@ import { searchKnowledgeBase } from '../efficiency/knowledgeBaseService';
 import { getTinyMLClassification } from './tinyml';
 import { getTinyLLMResponse } from './tinyllm';
 import { getTinyAIResponse } from './tinyai';
+import {
+    ensureTinyStackDependencies,
+    needsTinyStackDependencies,
+    areTinyStackDependenciesReady,
+} from './dependencies';
 import * as EscalationService from '../google'; // Layer 7: Escalation
 
 /**
@@ -38,6 +43,19 @@ export const routeMessage = async (
     const sanitizedText = firewallResult.sanitizedText;
     console.log('[Router] Layer 2 (Firewall): Passed');
 
+    const escalateToCloud = async () => {
+        console.log('[Router] Escalating to Layer 7 (Cloud LLM - Google).');
+        if (onProgress) {
+            onProgress({ status: 'fetching', message: 'Consulting cloud AI...' });
+        }
+        try {
+            await EscalationService.streamChatResponse(history, sanitizedText, onChunk);
+        } catch (error) {
+            console.error('[Router] Layer 7 (Escalation) failed:', error);
+            onChunk('Sorry, I encountered an issue while connecting to our advanced AI. Please try again later.');
+        }
+    };
+
     // --- Layer 3: Knowledge Base (RAG) ---
     const kbResponse = searchKnowledgeBase(sanitizedText);
     if (kbResponse) {
@@ -46,6 +64,26 @@ export const routeMessage = async (
         return;
     }
     console.log('[Router] Layer 3 (Knowledge Base): No answer found.');
+
+    if (needsTinyStackDependencies()) {
+        const shouldReportProgress = !areTinyStackDependenciesReady();
+        try {
+            if (shouldReportProgress && onProgress) {
+                onProgress({ status: 'initializing', message: 'Loading on-device AI runtimes...' });
+            }
+            await ensureTinyStackDependencies();
+            if (shouldReportProgress && onProgress) {
+                onProgress({ status: 'ready', message: 'On-device AI runtimes ready.' });
+            }
+        } catch (error) {
+            console.error('[Router] Failed to load Tiny stack dependencies:', error);
+            if (onProgress) {
+                onProgress({ status: 'error', message: 'On-device AI runtimes unavailable. Escalating to cloud AI...' });
+            }
+            await escalateToCloud();
+            return;
+        }
+    }
 
     // --- Layer 4: TinyML Classification ---
     const classification = await getTinyMLClassification(sanitizedText);
@@ -83,14 +121,5 @@ export const routeMessage = async (
 
 
     // --- Layer 7: Escalation to Cloud LLM ---
-    console.log('[Router] Escalating to Layer 7 (Cloud LLM - Google).');
-    if (onProgress) {
-        onProgress({ status: 'fetching', message: 'Consulting cloud AI...' });
-    }
-    try {
-        await EscalationService.streamChatResponse(history, sanitizedText, onChunk);
-    } catch (error) {
-        console.error('[Router] Layer 7 (Escalation) failed:', error);
-        onChunk('Sorry, I encountered an issue while connecting to our advanced AI. Please try again later.');
-    }
+    await escalateToCloud();
 };
