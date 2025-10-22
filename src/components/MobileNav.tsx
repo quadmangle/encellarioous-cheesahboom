@@ -5,17 +5,15 @@ import type { IconName, ModalType } from '../types';
 interface MobileNavProps {
   onOpenModal: (type: ModalType) => void;
   onToggleServicesMenu: () => void;
-  onNavigateToCompliance: () => void;
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({ onOpenModal, onToggleServicesMenu, onNavigateToCompliance }) => {
-  const navItems: Array<{ type: 'HOME' | 'JOIN' | 'CHAT' | 'SERVICES' | 'CONTACT' | 'COMPLIANCE'; icon: IconName; label: string }> = [
+const MobileNav: React.FC<MobileNavProps> = ({ onOpenModal, onToggleServicesMenu }) => {
+  const navItems: Array<{ type: 'HOME' | 'JOIN' | 'CHAT' | 'SERVICES' | 'CONTACT'; icon: IconName; label: string }> = [
     { type: 'HOME', icon: 'home', label: 'Home' },
     { type: 'JOIN', icon: 'user-plus', label: 'Join Us' },
     { type: 'CHAT', icon: 'chat', label: 'Chat' },
     { type: 'SERVICES', icon: 'layers', label: 'Services' },
     { type: 'CONTACT', icon: 'envelope', label: 'Contact' },
-    { type: 'COMPLIANCE', icon: 'check-circle', label: 'OPS CySec' },
   ];
 
   const handleNavClick = (type: typeof navItems[number]['type']) => {
@@ -25,9 +23,6 @@ const MobileNav: React.FC<MobileNavProps> = ({ onOpenModal, onToggleServicesMenu
         break;
       case 'SERVICES':
         onToggleServicesMenu();
-        break;
-      case 'COMPLIANCE':
-        onNavigateToCompliance();
         break;
       case 'CHAT':
       case 'JOIN':

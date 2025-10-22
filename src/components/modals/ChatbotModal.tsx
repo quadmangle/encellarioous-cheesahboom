@@ -16,11 +16,20 @@ const ChatbotModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
   
   useMovable(modalRef, headerRef, resizeHandleRef);
 
-  const { language } = useContext(GlobalContext);
+  const { language, setLanguage } = useContext(GlobalContext);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState<AIProgress | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const handleLanguageToggle = () => {
+    setLanguage(language === 'en' ? 'es' : 'en');
+  };
+
+  const handleMuteToggle = () => {
+    setIsMuted((prev) => !prev);
+  };
 
   const initialMessage = useMemo(
     () =>
@@ -164,6 +173,19 @@ const ChatbotModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
     }
   };
 
+  const languageButtonLabel = language === 'en' ? 'EN' : 'ES';
+  const languageToggleAria = language === 'en' ? 'Switch to Spanish' : 'Cambiar a inglés';
+  const muteButtonLabel = isMuted ? 'Unmute' : 'Mute';
+  const muteButtonAria = isMuted
+    ? language === 'es'
+      ? 'Activar audio del asistente'
+      : 'Unmute assistant audio'
+    : language === 'es'
+      ? 'Silenciar audio del asistente'
+      : 'Mute assistant audio';
+  const headerControlBaseClasses =
+    'inline-flex items-center justify-center rounded-md font-semibold text-xs px-2 py-1 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 w-auto shadow-sm';
+
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} showBackdrop={showBackdrop} modalClassName="w-auto max-w-lg min-w-[320px] fixed bottom-4 right-4">
       <div ref={modalRef} style={{ width: '400px', height: '600px' }} className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-3xl shadow-2xl overflow-hidden flex flex-col">
@@ -177,7 +199,31 @@ const ChatbotModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
               </p>
             )}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <button
+              type="button"
+              onClick={handleLanguageToggle}
+              onMouseDown={(event) => event.stopPropagation()}
+              className={`${headerControlBaseClasses} bg-[#6C5DD3] text-white hover:bg-[#5A48C6]`}
+              aria-label={languageToggleAria}
+              aria-pressed={language === 'es'}
+            >
+              {languageButtonLabel}
+            </button>
+            <button
+              type="button"
+              onClick={handleMuteToggle}
+              onMouseDown={(event) => event.stopPropagation()}
+              className={`${headerControlBaseClasses} ${
+                isMuted
+                  ? 'bg-primary hover:bg-[#00b4f0]'
+                  : 'bg-[#0094c9] hover:bg-[#007fae]'
+              } text-white`}
+              aria-label={muteButtonAria}
+              aria-pressed={!isMuted}
+            >
+              {muteButtonLabel}
+            </button>
             <button
               onClick={handleSessionRestart}
               className="px-3 py-1 text-xs font-semibold bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"

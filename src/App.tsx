@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ServiceCardsGrid from './components/ServiceCardsGrid';
@@ -14,7 +14,6 @@ import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
-import ComplianceChecklist from './components/ComplianceChecklist';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { CookiePreferences, ModalType, ServiceKey } from './types';
 
@@ -29,10 +28,12 @@ const DEFAULT_COOKIE_PREFERENCES: CookiePreferences = {
 const App: React.FC = () => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [selectedService, setSelectedService] = useState<ServiceKey | undefined>(undefined);
+  const [activeServicePage, setActiveServicePage] = useState<ServiceKey>('ops');
   const [isServicesMenuOpen, setIsServicesMenuOpen] = useState(false);
   const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>(DEFAULT_COOKIE_PREFERENCES);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const { theme } = useContext(GlobalContext);
+  const servicePageRef = useRef<HTMLElement | null>(null);
 
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
     if (modalType === 'SERVICE' && serviceKey) {
@@ -51,13 +52,6 @@ const App: React.FC = () => {
 
   const toggleServicesMenu = () => {
     setIsServicesMenuOpen(!isServicesMenuOpen);
-  };
-
-  const handleNavigateToCompliance = () => {
-    const targetElement = document.getElementById('compliance-section');
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
   };
 
   useEffect(() => {
@@ -96,17 +90,11 @@ const App: React.FC = () => {
 
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
-    const sectionId = `service-section-${serviceKey}`;
-    const cardId = `card-${serviceKey}`;
-    const sectionElement = document.getElementById(sectionId);
-    const fallbackElement = document.getElementById(cardId);
-    const targetElement = sectionElement ?? fallbackElement;
+    setActiveServicePage(serviceKey);
 
-    if (targetElement) {
-      setTimeout(() => {
-        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
+    requestAnimationFrame(() => {
+      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   };
 
   const persistCookiePreferences = (preferences: CookiePreferences, hideBanner = true) => {
@@ -152,16 +140,6 @@ const App: React.FC = () => {
     }
   };
 
-  const scrollToTop = () => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const scrollToServices = () => {
-    handleServiceClick('ops');
-  };
-
   return (
     <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
@@ -169,27 +147,30 @@ const App: React.FC = () => {
         <Header
           onOpenModal={handleOpenModal}
           onNavigateToService={handleServiceClick}
-          onNavigateToCompliance={handleNavigateToCompliance}
+          activeServiceKey={activeServicePage}
         />
         <main>
           <Hero onPrimaryAction={() => handleOpenModal('CONTACT')} />
           <ServiceCardsGrid onCardClick={(key) => handleOpenModal('SERVICE', key)} />
-          <ServiceBreakdown />
-          <ComplianceChecklist />
+          <ServiceBreakdown
+            activeService={activeServicePage}
+            sectionRef={servicePageRef}
+            onRequestInfo={() => handleOpenModal('CONTACT')}
+          />
         </main>
         <Footer />
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
-          onNavigateToCompliance={handleNavigateToCompliance}
         />
         <FABs onOpenModal={handleOpenModal} />
       </div>
 
-      <ServicesMenu 
+      <ServicesMenu
         isOpen={isServicesMenuOpen}
         onClose={toggleServicesMenu}
         onServiceClick={handleServiceClick}
+        activeService={activeServicePage}
       />
 
       <ServiceModal 

@@ -7,10 +7,10 @@ import Icon from './Icon';
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
   onNavigateToService: (key: ServiceKey) => void;
-  onNavigateToCompliance: () => void;
+  activeServiceKey: ServiceKey;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNavigateToCompliance }) => {
+const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, activeServiceKey }) => {
   const { language, setLanguage, theme, setTheme } = useContext(GlobalContext);
   const toggleLanguage = () => setLanguage(language === 'en' ? 'es' : 'en');
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
@@ -21,8 +21,6 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNav
     { key: 'pro', en: 'Professionals', es: 'Profesionales' },
   ];
 
-  const complianceLabel = language === 'en' ? 'OPS CySec Core' : 'OPS CySec Core';
-
   return (
     <header className="w-full max-w-6xl mx-auto flex items-center justify-between p-5 sm:px-8 font-semibold bg-transparent">
       <span className="font-bold text-4xl text-accent tracking-widest drop-shadow-logo-glow select-none">OPS</span>
@@ -32,18 +30,14 @@ const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNav
             key={link.key}
             type="button"
             onClick={() => onNavigateToService(link.key)}
-            className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
+            className={`text-lg relative transition-colors duration-200 outline-none ${
+              activeServiceKey === link.key ? 'text-primary dark:text-accent' : 'hover:text-primary focus:text-primary'
+            }`}
+            aria-current={activeServiceKey === link.key ? 'page' : undefined}
           >
             {link[language]}
           </button>
         ))}
-        <button
-          type="button"
-          onClick={onNavigateToCompliance}
-          className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
-        >
-          {complianceLabel}
-        </button>
       </nav>
       <div className="flex items-center gap-3">
         <button
