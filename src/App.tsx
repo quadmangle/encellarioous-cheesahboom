@@ -88,13 +88,34 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const scrollToServiceSection = () => {
+    const executeScroll = () => {
+      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    if (typeof window !== 'undefined') {
+      window.requestAnimationFrame(executeScroll);
+    } else {
+      executeScroll();
+    }
+  };
+
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
+    scrollToServiceSection();
+  };
 
-    requestAnimationFrame(() => {
-      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  const handleScrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToServices = () => {
+    setIsServicesMenuOpen(false);
+
+    scrollToServiceSection();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
@@ -163,12 +184,16 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
-        <Footer />
+        <Footer onOpenModal={(type) => handleOpenModal(type)} />
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
-        <FABs onOpenModal={handleOpenModal} />
+        <FABs
+          onOpenModal={(type) => handleOpenModal(type)}
+          onScrollToTop={handleScrollToTop}
+          onScrollToServices={handleScrollToServices}
+        />
       </div>
 
       <ServicesMenu
