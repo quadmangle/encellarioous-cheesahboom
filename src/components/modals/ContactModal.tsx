@@ -61,7 +61,12 @@ const ContactModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop }) =
 
 
   return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose} showBackdrop={showBackdrop} modalClassName="w-auto max-w-xl min-w-[320px] fixed bottom-24 right-4 lg:bottom-40">
+    <ModalWrapper
+      isOpen={isOpen}
+      onClose={onClose}
+      showBackdrop={showBackdrop}
+      modalClassName="w-auto max-w-xl min-w-[320px] fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
       <div ref={modalRef} style={{ width: '600px', height: 'auto' }} className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-3xl shadow-2xl overflow-hidden flex flex-col">
         <div ref={headerRef} className="p-4 bg-gray-100 dark:bg-gray-800 cursor-move flex justify-between items-center shrink-0">
           <h2 className="text-lg font-bold">{currentContent.title}</h2>
