@@ -146,6 +146,29 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
             const category = content.categories[key];
             const isLocked = key === 'necessary';
             const isEnabled = localPreferences[key];
+            const toggleLabel = `${category.title}: ${isEnabled ? 'enabled' : 'disabled'}`;
+            const toggleClassName = [
+              'group relative inline-flex h-9 w-16 items-center overflow-hidden rounded-full border transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-rose-400',
+              isLocked ? 'cursor-not-allowed opacity-75' : 'cursor-pointer',
+              isEnabled
+                ? 'border-transparent bg-gradient-to-r from-rose-500 via-rose-500 to-red-500 shadow-[0_10px_24px_rgba(244,63,94,0.45)]'
+                : 'border-gray-300/70 dark:border-gray-600/60 bg-gray-300/80 dark:bg-gray-700/80 shadow-inner',
+              !isLocked && isEnabled ? 'hover:shadow-[0_12px_28px_rgba(244,63,94,0.55)]' : '',
+              !isLocked && !isEnabled ? 'hover:bg-gray-200/90 dark:hover:bg-gray-600/80' : '',
+            ]
+              .filter((className) => Boolean(className))
+              .join(' ');
+            const knobClassName = [
+              'relative z-[2] flex h-7 w-7 items-center justify-center rounded-full shadow-lg transition-all duration-300',
+              isEnabled ? 'translate-x-7' : 'translate-x-1',
+              isLocked
+                ? 'bg-gray-200 dark:bg-gray-500 text-gray-600'
+                : isEnabled
+                  ? 'bg-gradient-to-br from-white via-white to-rose-50 text-rose-500'
+                  : 'bg-white dark:bg-gray-50 text-gray-500',
+            ]
+              .filter((className) => Boolean(className))
+              .join(' ');
 
             return (
               <div
@@ -162,16 +185,42 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
                     role="switch"
                     aria-checked={isEnabled}
                     aria-disabled={isLocked}
+                    aria-label={toggleLabel}
+                    disabled={isLocked}
                     onClick={() => handleToggle(key)}
-                    className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
-                      isEnabled ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-700'
-                    } ${isLocked ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    className={toggleClassName}
                   >
+                    <span className="visually-hidden">{toggleLabel}</span>
                     <span
-                      className={`inline-block h-6 w-6 transform rounded-full bg-white transition-transform ${
-                        isEnabled ? 'translate-x-5' : 'translate-x-1'
+                      aria-hidden="true"
+                      className={`pointer-events-none absolute left-3 z-[1] text-[0.65rem] font-semibold tracking-[0.18em] text-white transition-opacity duration-300 ${
+                        isEnabled ? 'opacity-100' : 'opacity-0'
                       }`}
-                    />
+                    >
+                      ON
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className={`pointer-events-none absolute right-3 z-[1] text-[0.65rem] font-semibold tracking-[0.18em] transition-opacity duration-300 ${
+                        isEnabled ? 'opacity-0' : 'opacity-100'
+                      } ${isLocked ? 'text-gray-400 dark:text-gray-400' : 'text-gray-500 dark:text-gray-300'}`}
+                    >
+                      OFF
+                    </span>
+                    <span className={knobClassName}>
+                      {isLocked ? (
+                        <Icon name="lock" className="h-3.5 w-3.5" />
+                      ) : (
+                        <span
+                          aria-hidden="true"
+                          className={`rounded-full transition-all duration-300 ${
+                            isEnabled
+                              ? 'h-3 w-3 bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.55)]'
+                              : 'h-2.5 w-2.5 bg-gray-300 dark:bg-gray-500'
+                          }`}
+                        />
+                      )}
+                    </span>
                   </button>
                 </div>
               </div>
