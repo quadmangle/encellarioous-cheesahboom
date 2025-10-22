@@ -101,11 +101,17 @@ const App: React.FC = () => {
   };
 
   const scrollToServiceSection = () => {
-    if (!servicePageRef.current) {
+    if (typeof window === 'undefined') {
       return;
     }
 
-    servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (servicePageRef.current) {
+      servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    const section = document.getElementById('service-details');
+    section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleScrollToServices = () => {
