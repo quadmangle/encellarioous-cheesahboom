@@ -1,1 +1,1 @@
-export { integrationConfig, type IntegrationConfig } from '../src/services/integrationConfig.js';
+export { integrationConfig, type IntegrationConfig } from '../integrationConfig.js';
