@@ -7,9 +7,10 @@ interface ServicesMenuProps {
   isOpen: boolean;
   onClose: () => void;
   onServiceClick: (key: ServiceKey) => void;
+  activeService?: ServiceKey;
 }
 
-const ServicesMenu: React.FC<ServicesMenuProps> = ({ isOpen, onClose, onServiceClick }) => {
+const ServicesMenu: React.FC<ServicesMenuProps> = ({ isOpen, onClose, onServiceClick, activeService }) => {
   const { language } = useContext(GlobalContext);
 
   if (!isOpen) {
@@ -34,13 +35,24 @@ const ServicesMenu: React.FC<ServicesMenuProps> = ({ isOpen, onClose, onServiceC
           <ul className="space-y-2">
             {(Object.keys(SERVICES_DATA) as ServiceKey[]).map((key) => {
               const service = SERVICES_DATA[key][language];
+              const isActive = activeService === key;
+
               return (
                 <li key={key}>
                   <button
                     onClick={() => onServiceClick(key)}
-                    className="w-full text-left p-3 rounded-lg flex items-center gap-4 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+                    className={`w-full text-left p-3 rounded-lg flex items-center gap-4 transition-colors ${
+                      isActive
+                        ? 'bg-primary/10 text-primary dark:bg-accent/10 dark:text-accent'
+                        : 'hover:bg-gray-100 dark:hover:bg-gray-700/50'
+                    }`}
+                    aria-current={isActive ? 'page' : undefined}
                   >
-                    <i className={`${service.icon} text-xl w-6 text-center text-primary dark:text-accent`}></i>
+                    <i
+                      className={`${service.icon} text-xl w-6 text-center ${
+                        isActive ? 'text-primary dark:text-accent' : 'text-primary/70 dark:text-accent/70'
+                      }`}
+                    ></i>
                     <span className="font-semibold text-light-text dark:text-dark-text">{service.title}</span>
                   </button>
                 </li>

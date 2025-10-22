@@ -8,38 +8,37 @@ import { SERVICES_DATA } from '../constants';
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
   onNavigateToService: (key: ServiceKey) => void;
-  onNavigateToCompliance: () => void;
+  activeServiceKey: ServiceKey;
 }
 
-const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, onNavigateToCompliance }) => {
-  const { language, theme, setTheme } = useContext(GlobalContext);
+const Header: React.FC<HeaderProps> = ({ onOpenModal, onNavigateToService, activeServiceKey }) => {
+  const { language, setLanguage, theme, setTheme } = useContext(GlobalContext);
+  const toggleLanguage = () => setLanguage(language === 'en' ? 'es' : 'en');
   const toggleTheme = () => setTheme(theme === 'light' ? 'dark' : 'light');
-  const complianceLabel = language === 'en' ? 'OPS CySec Core' : 'OPS CySec Core';
+  const navLinks: { key: ServiceKey; en: string; es: string }[] = [
+    { key: 'ops', en: 'Business Operations', es: 'Operaciones' },
+    { key: 'cc', en: 'Contact Center', es: 'Centro de Contacto' },
+    { key: 'it', en: 'IT Support', es: 'Soporte IT' },
+    { key: 'pro', en: 'Professionals', es: 'Profesionales' },
+  ];
 
   return (
     <header className="w-full max-w-6xl mx-auto flex items-center justify-between p-5 sm:px-8 font-semibold bg-transparent">
       <span className="font-bold text-4xl text-accent tracking-widest drop-shadow-logo-glow select-none">OPS</span>
       <nav className="hidden lg:flex gap-9">
-        {(Object.keys(SERVICES_DATA) as ServiceKey[]).map((key) => {
-          const label = SERVICES_DATA[key][language].title;
-          return (
-            <button
-              key={key}
-              type="button"
-              onClick={() => onNavigateToService(key)}
-              className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
-            >
-              {label}
-            </button>
-          );
-        })}
-        <button
-          type="button"
-          onClick={onNavigateToCompliance}
-          className="text-lg relative transition-colors duration-200 hover:text-primary focus:text-primary outline-none"
-        >
-          {complianceLabel}
-        </button>
+        {navLinks.map((link) => (
+          <button
+            key={link.key}
+            type="button"
+            onClick={() => onNavigateToService(link.key)}
+            className={`text-lg relative transition-colors duration-200 outline-none ${
+              activeServiceKey === link.key ? 'text-primary dark:text-accent' : 'hover:text-primary focus:text-primary'
+            }`}
+            aria-current={activeServiceKey === link.key ? 'page' : undefined}
+          >
+            {link[language]}
+          </button>
+        ))}
       </nav>
       <div className="flex items-center gap-3">
         <button
