@@ -115,10 +115,9 @@ const App: React.FC = () => {
   };
 
   const handleServiceClick = (serviceKey: ServiceKey) => {
-    setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
 
-    scrollToServiceSection();
+    handleScrollToServices();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
