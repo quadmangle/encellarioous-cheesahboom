@@ -1,62 +1,59 @@
 // src/services/cloudflare/index.ts
 /**
- * Cloudflare AI Service (Workers AI) - Placeholder
+ * Cloudflare AI Service (Workers AI)
  *
- * This file is a placeholder to demonstrate how to integrate with Cloudflare's
- * serverless AI platform. You would typically deploy a Cloudflare Worker that
- * proxies requests to their models and call it from here.
- *
- * Cloudflare Workers AI: https://developers.cloudflare.com/workers-ai/
- *
- * To implement this:
- * 1. Create a Cloudflare Worker.
- * 2. In the worker, use the `env.AI.run()` method to call a model.
- * 3. Expose an endpoint on your worker.
- * 4. Use `fetch` in this service to call your worker's endpoint.
+ * Connects the escalation layer to a Cloudflare Worker that proxies requests
+ * to Workers AI. The worker URL and optional bearer token are injected at
+ * runtime through `window.__OPS_RUNTIME_ENV__` (or process environment
+ * variables during the build).
  */
 import type { ChatMessage } from '../../types';
 import type { AIService } from "../aiService";
+import { integrationConfig } from '../integrationConfig';
 
-const CLOUDFLARE_WORKER_URL = ''; // <-- Add your Cloudflare Worker URL here
-
+const { workerUrl: CLOUDFLARE_WORKER_URL } = integrationConfig.cloudflare;
 const streamChatResponse: AIService['streamChatResponse'] = async (
-  history: ChatMessage[],
-  newMessage: string,
-  onChunk: (chunk: string) => void
+  history,
+  newMessage,
+  onChunk,
 ) => {
   if (!CLOUDFLARE_WORKER_URL) {
-    const msg = "Cloudflare AI service is not configured. Please set your Worker URL in `services/cloudflare/index.ts`.";
+    const msg =
+      "Cloudflare AI service is not configured. Provide CLOUDFLARE_WORKER_URL via window.__OPS_RUNTIME_ENV__ or src/services/integrationConfig.ts.";
     console.warn(msg);
     onChunk(msg);
     return;
   }
 
   try {
-    // This is a simplified example. For true streaming, you'd need to handle
-    // a ReadableStream response from your worker.
-    const response = await fetch(CLOUDFLARE_WORKER_URL, {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (authToken) {
+      headers.Authorization = `Bearer ${authToken}`;
+    }
+
+    const response = await fetch(workerUrl, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ history, newMessage }),
+      headers,
+      body: JSON.stringify({ history: payloadHistory, newMessage }),
     });
 
     if (!response.ok) {
-      throw new Error(`Cloudflare Worker responded with status: ${response.status}`);
+      const errorBody = (await response.text()).slice(0, 2000);
+      throw new Error(`Cloudflare Worker responded with status ${response.status}: ${errorBody}`);
     }
 
-    const result = await response.json();
-    onChunk(result.response || "No response from Cloudflare AI.");
-
+    await processWorkerStream(response, onChunk);
   } catch (error) {
-    console.error("Error communicating with Cloudflare AI Worker:", error);
-    onChunk("Error connecting to the Cloudflare AI service.");
+    console.error('Error communicating with Cloudflare AI Worker:', error);
+    onChunk('Error connecting to the Cloudflare AI service.');
   }
 };
 
 const resetChat: AIService['resetChat'] = () => {
-  // Chat history is managed by the client, so a reset might not be needed
-  // on the serverless side unless you maintain session state.
-  console.log("Cloudflare chat session reset.");
+  console.log('Cloudflare chat session reset.');
 };
 
 export { streamChatResponse, resetChat };

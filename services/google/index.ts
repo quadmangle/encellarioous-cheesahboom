@@ -10,7 +10,7 @@
 import { GoogleGenAI, type Chat } from '@google/genai';
 import type { ChatMessage } from '../../types';
 import type { AIService } from '../aiService';
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../../src/services/runtime/integrationConfig';
 
 let ai: GoogleGenAI | null = null;
 let chat: Chat | null = null;
@@ -31,7 +31,7 @@ const initializeChat = () => {
 
   if (!apiKey) {
     throw new Error(
-      'Google Gemini API key not configured. Provide GEMINI_API_KEY via window.__OPS_RUNTIME_ENV__ or services/integrationConfig.ts.'
+      'Google Gemini API key not configured. Provide GEMINI_API_KEY via window.__OPS_RUNTIME_ENV__ or src/services/runtime/integrationConfig.ts.'
     );
   }
 

@@ -6,8 +6,9 @@
   "scripts": {
     "build": "node build.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "npm run test:package",
-    "test:package": "node ./scripts/validate-package-json.mjs"
+    "test": "npm run test:package && npm run test:knowledge",
+    "test:package": "node ./scripts/validate-package-json.mjs",
+    "test:knowledge": "node ./scripts/validate-knowledge-corpus.mjs"
   },
   "dependencies": {
     "react": "^19.1.1",

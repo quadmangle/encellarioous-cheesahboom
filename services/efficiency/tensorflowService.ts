@@ -11,7 +11,7 @@
 declare var tf: any;
 declare var toxicity: any;
 
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../../src/services/runtime/integrationConfig';
 
 type ModelStatus = 'uninitialized' | 'loading' | 'ready' | 'error';
 interface ToxicityResult {
