@@ -144,7 +144,11 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     }, [isOpen]);
 
     return (
-        <ModalWrapper isOpen={isOpen} onClose={onClose} modalClassName="w-[96vw] max-w-2xl min-w-[310px] top-[15vh]">
+        <ModalWrapper
+          isOpen={isOpen}
+          onClose={onClose}
+          modalClassName="w-[96vw] max-w-2xl min-w-[310px] top-[8vh] md:top-[6vh]"
+        >
             <div className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-2xl shadow-2xl flex flex-col overflow-hidden">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
                     <Icon name="search" className="w-5 h-5 text-gray-400" />

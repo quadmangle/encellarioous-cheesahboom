@@ -11,7 +11,6 @@ import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
 import CookieConsent from './components/CookieConsent';
 import CookieConsentModal from './components/modals/CookieConsentModal';
-import CookieConsent from './components/CookieConsent';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
@@ -88,8 +87,7 @@ const App: React.FC = () => {
     }
   }, []);
 
-<<<<<<< HEAD
-  const scrollToTop = () => {
+  const handleScrollToTop = () => {
     if (typeof window === 'undefined') {
       return;
     }
@@ -102,41 +100,25 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const scrollToServices = () => {
-    if (typeof window === 'undefined') {
+  const scrollToServiceSection = () => {
+    if (!servicePageRef.current) {
       return;
     }
 
-=======
->>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
-  const handleScrollToTop = () => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-<<<<<<< HEAD
   const handleScrollToServices = () => {
     setIsServicesMenuOpen(false);
 
     scrollToServiceSection();
   };
 
-=======
->>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
 
-    scrollToServices();
-  };
-
-  const handleScrollToServices = () => {
-    if (!servicePageRef.current) {
-      return;
-    }
-
-    servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    scrollToServiceSection();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
@@ -212,28 +194,19 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
-<<<<<<< HEAD
         <Footer
           onOpenModal={handleOpenModal}
-          onScrollToTop={scrollToTop}
-          onScrollToServices={scrollToServices}
+          onScrollToTop={handleScrollToTop}
+          onScrollToServices={handleScrollToServices}
         />
-=======
-        <Footer onOpenModal={handleOpenModal} />
->>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
         <FABs
           onOpenModal={handleOpenModal}
-<<<<<<< HEAD
-          onScrollToTop={scrollToTop}
-          onScrollToServices={scrollToServices}
-=======
           onScrollToTop={handleScrollToTop}
           onScrollToServices={handleScrollToServices}
->>>>>>> 4798d35 (Fix TypeScript configuration and prop usage)
         />
       </div>
 

@@ -47,7 +47,7 @@ const ServiceCardsGrid: React.FC<ServiceCardsGridProps> = ({ onCardClick }) => {
   const { language } = useContext(GlobalContext);
 
   return (
-    <div className="w-[min(75rem,_100%)] mx-auto mt-11 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="w-[min(75rem,_100%)] mx-auto mt-8 sm:mt-9 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {(Object.keys(SERVICES_DATA) as ServiceKey[]).map((key, index) => {
         const service = SERVICES_DATA[key][language];
         return (
