@@ -11,15 +11,14 @@ import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
 import CookieConsent from './components/CookieConsent';
 import CookieConsentModal from './components/modals/CookieConsentModal';
+import CookieConsent from './components/CookieConsent';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { CookiePreferences, ModalType, ServiceKey } from './types';
-
 const COOKIE_STORAGE_KEY = 'ops-cookie-preferences-v1';
-
 const DEFAULT_COOKIE_PREFERENCES: CookiePreferences = {
   necessary: true,
   analytics: false,
@@ -35,7 +34,6 @@ const App: React.FC = () => {
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const { theme } = useContext(GlobalContext);
   const servicePageRef = useRef<HTMLElement | null>(null);
-
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
     if (modalType === 'SERVICE' && serviceKey) {
       setSelectedService(serviceKey);
@@ -194,10 +192,12 @@ const App: React.FC = () => {
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
-        <FABs
-          onOpenModal={(type) => handleOpenModal(type)}
-          onScrollToTop={handleScrollToTop}
-          onScrollToServices={handleScrollToServices}
+        <FABs onOpenModal={handleOpenModal} />
+        <CookieConsent
+          isVisible={isCookieBannerVisible}
+          onAcceptAll={handleAcceptAllCookies}
+          onDecline={handleRejectCookies}
+          onManage={() => handleOpenModal('COOKIES')}
         />
       </div>
 
