@@ -3,6 +3,7 @@ import { GlobalContext } from '../contexts/GlobalContext';
 import type { ModalType, ServiceKey } from '../types';
 import LanguageToggle from './LanguageToggle';
 import Icon from './Icon';
+import { SERVICES_DATA } from '../constants';
 
 interface HeaderProps {
   onOpenModal: (type: ModalType) => void;
