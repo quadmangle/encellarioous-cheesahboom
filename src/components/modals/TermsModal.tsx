@@ -123,7 +123,7 @@ const TermsModal: React.FC<ModalProps> = ({ isOpen, onClose, showBackdrop = true
       isOpen={isOpen}
       onClose={onClose}
       showBackdrop={showBackdrop}
-      modalClassName="w-full max-w-3xl px-4 md:px-0 top-[6vh] left-1/2 -translate-x-1/2"
+      modalClassName="w-full max-w-3xl px-4 md:px-0 top-[4vh] md:top-[3vh] left-1/2 -translate-x-1/2"
     >
       <div
         ref={modalRef}

@@ -15,7 +15,11 @@ const ServiceModal: React.FC<ModalProps> = ({ isOpen, onClose, serviceKey }) => 
   const { modal: modalData } = service;
 
   return (
-    <ModalWrapper isOpen={isOpen} onClose={onClose} modalClassName="w-[96vw] max-w-4xl min-w-[320px] top-[10vh]">
+    <ModalWrapper
+      isOpen={isOpen}
+      onClose={onClose}
+      modalClassName="w-[96vw] max-w-4xl min-w-[320px] top-[6vh] md:top-[5vh]"
+    >
       <div className="bg-white dark:bg-dark-modal text-light-text dark:text-dark-text rounded-2xl shadow-2xl flex flex-col overflow-hidden max-h-[80vh]">
         <div className="p-5 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
           <div className="flex items-center gap-4">

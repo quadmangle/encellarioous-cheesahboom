@@ -53,7 +53,7 @@ const ModalWrapper: React.FC<ModalWrapperProps> = ({ children, onClose, isOpen, 
       onClick={handleBackdropClick}
       className={`fixed inset-0 z-[1000] modal-enter ${
         showBackdrop
-          ? 'flex items-start justify-center pt-[5vh] bg-black/30 dark:bg-[#1a1930]/50 backdrop-blur-sm'
+          ? 'flex items-start justify-center pt-4 sm:pt-6 bg-black/30 dark:bg-[#1a1930]/50 backdrop-blur-sm'
           : 'pointer-events-none'
       } ${backdropClassName}`}
     >
