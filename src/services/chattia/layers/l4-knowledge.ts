@@ -1,8 +1,9 @@
 import type { Language } from '../../../types';
 import { BM25 } from '../../efficiency/bm25';
-import { integrationConfig } from '../../integrationConfig';
 import type { KnowledgeDocument, KnowledgeHit, KnowledgeResult } from '../types';
-const KNOWLEDGE_SOURCE_URL = integrationConfig.knowledgeBase.corpusUrl || './ops_bm25_corpus.jsonl';
+
+const KNOWLEDGE_SOURCE_URL = './assets/ops_bm25_corpus.jsonl';
+
 let bm25Index: BM25<string> | null = null;
 let documents: KnowledgeDocument[] = [];
 let docMap = new Map<string, KnowledgeDocument>();
@@ -32,7 +33,8 @@ const ensureKnowledgeCorpus = async () => {
           bm25Index = null;
           return;
         }
-        const text = await fetchKnowledgeCorpus();
+        const response = await fetch(KNOWLEDGE_SOURCE_URL);
+        const text = await response.text();
         const lines = text.split('\n').map((line) => line.trim()).filter(Boolean);
         documents = lines.map((line) => buildDocument(JSON.parse(line)));
         docMap = new Map(documents.map((doc) => [doc.docId, doc]));
