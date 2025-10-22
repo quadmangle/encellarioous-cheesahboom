@@ -10,6 +10,7 @@ import JoinModal from './components/modals/JoinModal';
 import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
 import CookieConsentModal from './components/modals/CookieConsentModal';
+import CookieConsent from './components/CookieConsent';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
@@ -169,6 +170,12 @@ const App: React.FC = () => {
           onToggleServicesMenu={toggleServicesMenu}
         />
         <FABs onOpenModal={handleOpenModal} />
+        <CookieConsent
+          isVisible={isCookieBannerVisible}
+          onAcceptAll={handleAcceptAllCookies}
+          onDecline={handleRejectCookies}
+          onManage={() => handleOpenModal('COOKIES')}
+        />
       </div>
 
       <ServicesMenu
