@@ -9,16 +9,16 @@ import ChatbotModal from './components/modals/ChatbotModal';
 import JoinModal from './components/modals/JoinModal';
 import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
+import CookieConsent from './components/CookieConsent';
 import CookieConsentModal from './components/modals/CookieConsentModal';
+import CookieConsent from './components/CookieConsent';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { CookiePreferences, ModalType, ServiceKey } from './types';
-
 const COOKIE_STORAGE_KEY = 'ops-cookie-preferences-v1';
-
 const DEFAULT_COOKIE_PREFERENCES: CookiePreferences = {
   necessary: true,
   analytics: false,
@@ -35,7 +35,6 @@ const App: React.FC = () => {
   const { theme } = useContext(GlobalContext);
   const pageTopRef = useRef<HTMLDivElement | null>(null);
   const servicePageRef = useRef<HTMLElement | null>(null);
-
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
     if (modalType === 'SERVICE' && serviceKey) {
       setSelectedService(serviceKey);
@@ -107,9 +106,16 @@ const App: React.FC = () => {
       return;
     }
 
-    requestAnimationFrame(() => {
-      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  const handleScrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToServices = () => {
+    setIsServicesMenuOpen(false);
+
+    scrollToServiceSection();
   };
 
   const handleServiceClick = (serviceKey: ServiceKey) => {
@@ -165,6 +171,10 @@ const App: React.FC = () => {
     if (activeModal === 'COOKIES') {
       handleCloseModal();
     }
+  };
+
+  const handleManageCookies = () => {
+    handleOpenModal('COOKIES');
   };
 
   return (
@@ -238,6 +248,12 @@ const App: React.FC = () => {
       <TermsModal
         isOpen={activeModal === 'TERMS'}
         onClose={handleCloseModal}
+      />
+      <CookieConsent
+        isVisible={isCookieBannerVisible && activeModal !== 'COOKIES'}
+        onAcceptAll={handleAcceptAllCookies}
+        onDecline={handleRejectCookies}
+        onManage={handleManageCookies}
       />
       <CookieConsentModal
         isOpen={activeModal === 'COOKIES'}

@@ -2,7 +2,7 @@ type RuntimeEnv = Record<string, string | undefined>;
 
 declare global {
   // eslint-disable-next-line no-var
-  var __OPS_RUNTIME_ENV__?: RuntimeEnv;
+  var __OPS_RUNTIME_ENV__: RuntimeEnv | undefined;
   interface Window {
     __OPS_RUNTIME_ENV__?: RuntimeEnv;
   }
