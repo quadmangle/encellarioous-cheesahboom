@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const [cookiePreferences, setCookiePreferences] = useState<CookiePreferences>(DEFAULT_COOKIE_PREFERENCES);
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const { theme } = useContext(GlobalContext);
+  const pageTopRef = useRef<HTMLDivElement | null>(null);
   const servicePageRef = useRef<HTMLElement | null>(null);
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
     if (modalType === 'SERVICE' && serviceKey) {
@@ -87,23 +88,23 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const scrollToServiceSection = () => {
-    const executeScroll = () => {
-      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
-
-    if (typeof window !== 'undefined') {
-      window.requestAnimationFrame(executeScroll);
-    } else {
-      executeScroll();
+  const scrollToTop = () => {
+    if (typeof window === 'undefined') {
+      return;
     }
+
+    if (pageTopRef.current) {
+      pageTopRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleServiceClick = (serviceKey: ServiceKey) => {
-    setIsServicesMenuOpen(false);
-    setActiveServicePage(serviceKey);
-    scrollToServiceSection();
-  };
+  const scrollToServices = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
 
   const handleScrollToTop = () => {
     if (typeof window !== 'undefined') {
@@ -115,6 +116,13 @@ const App: React.FC = () => {
     setIsServicesMenuOpen(false);
 
     scrollToServiceSection();
+  };
+
+  const handleServiceClick = (serviceKey: ServiceKey) => {
+    setIsServicesMenuOpen(false);
+    setActiveServicePage(serviceKey);
+
+    scrollToServices();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
@@ -170,7 +178,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
+    <div
+      ref={pageTopRef}
+      className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}
+    >
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
       <div className="relative z-10">
         <Header
@@ -187,17 +198,19 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
-        <Footer onOpenModal={(type) => handleOpenModal(type)} />
+        <Footer
+          onOpenModal={handleOpenModal}
+          onScrollToTop={scrollToTop}
+          onScrollToServices={scrollToServices}
+        />
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
-        <FABs onOpenModal={handleOpenModal} />
-        <CookieConsent
-          isVisible={isCookieBannerVisible}
-          onAcceptAll={handleAcceptAllCookies}
-          onDecline={handleRejectCookies}
-          onManage={() => handleOpenModal('COOKIES')}
+        <FABs
+          onOpenModal={handleOpenModal}
+          onScrollToTop={scrollToTop}
+          onScrollToServices={scrollToServices}
         />
       </div>
 
