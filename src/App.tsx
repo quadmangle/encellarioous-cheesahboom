@@ -9,6 +9,7 @@ import ChatbotModal from './components/modals/ChatbotModal';
 import JoinModal from './components/modals/JoinModal';
 import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
+import CookieConsent from './components/CookieConsent';
 import CookieConsentModal from './components/modals/CookieConsentModal';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
@@ -166,6 +167,10 @@ const App: React.FC = () => {
     }
   };
 
+  const handleManageCookies = () => {
+    handleOpenModal('COOKIES');
+  };
+
   return (
     <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
@@ -230,6 +235,12 @@ const App: React.FC = () => {
       <TermsModal
         isOpen={activeModal === 'TERMS'}
         onClose={handleCloseModal}
+      />
+      <CookieConsent
+        isVisible={isCookieBannerVisible && activeModal !== 'COOKIES'}
+        onAcceptAll={handleAcceptAllCookies}
+        onDecline={handleRejectCookies}
+        onManage={handleManageCookies}
       />
       <CookieConsentModal
         isOpen={activeModal === 'COOKIES'}
