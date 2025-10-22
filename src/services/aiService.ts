@@ -10,7 +10,7 @@
 // --- Configuration ---
 // Change this variable to switch between different AI service stacks.
 // 'google': Uses the full-power Google Gemini model (escalation layer).
-// 'cloudflare': Placeholder for Cloudflare Workers AI.
+// 'cloudflare': Uses a Cloudflare Workers AI escalation endpoint.
 // 'tinyml': Implements the full 7-layer security-first architecture with local/edge models.
 // FIX: Using a const with a type assertion to prevent TypeScript from narrowing the type of ACTIVE_SERVICE_STACK to a single literal value. This ensures the switch statement and other checks can correctly evaluate all possible cases.
 const ACTIVE_SERVICE_STACK = 'chattia7' as 'google' | 'cloudflare' | 'tinyml' | 'chattia7';
