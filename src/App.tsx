@@ -9,16 +9,16 @@ import ChatbotModal from './components/modals/ChatbotModal';
 import JoinModal from './components/modals/JoinModal';
 import ContactModal from './components/modals/ContactModal';
 import TermsModal from './components/modals/TermsModal';
+import CookieConsent from './components/CookieConsent';
 import CookieConsentModal from './components/modals/CookieConsentModal';
+import CookieConsent from './components/CookieConsent';
 import FABs from './components/FABs';
 import MobileNav from './components/MobileNav';
 import ServicesMenu from './components/ServicesMenu';
 import ServiceBreakdown from './components/ServiceBreakdown';
 import { GlobalContext } from './contexts/GlobalContext';
 import type { CookiePreferences, ModalType, ServiceKey } from './types';
-
 const COOKIE_STORAGE_KEY = 'ops-cookie-preferences-v1';
-
 const DEFAULT_COOKIE_PREFERENCES: CookiePreferences = {
   necessary: true,
   analytics: false,
@@ -34,7 +34,6 @@ const App: React.FC = () => {
   const [isCookieBannerVisible, setIsCookieBannerVisible] = useState(false);
   const { theme } = useContext(GlobalContext);
   const servicePageRef = useRef<HTMLElement | null>(null);
-
   const handleOpenModal = (modalType: ModalType, serviceKey?: ServiceKey) => {
     if (modalType === 'SERVICE' && serviceKey) {
       setSelectedService(serviceKey);
@@ -88,13 +87,34 @@ const App: React.FC = () => {
     }
   }, []);
 
+  const scrollToServiceSection = () => {
+    const executeScroll = () => {
+      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    if (typeof window !== 'undefined') {
+      window.requestAnimationFrame(executeScroll);
+    } else {
+      executeScroll();
+    }
+  };
+
   const handleServiceClick = (serviceKey: ServiceKey) => {
     setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
+    scrollToServiceSection();
+  };
 
-    requestAnimationFrame(() => {
-      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+  const handleScrollToTop = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToServices = () => {
+    setIsServicesMenuOpen(false);
+
+    scrollToServiceSection();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
@@ -145,6 +165,10 @@ const App: React.FC = () => {
     }
   };
 
+  const handleManageCookies = () => {
+    handleOpenModal('COOKIES');
+  };
+
   return (
     <div className={`font-sans bg-light-bg dark:bg-dark-bg transition-colors duration-300 min-h-screen relative pb-24`}>
       <div className="absolute top-0 left-0 w-full h-full bg-grid-light dark:bg-grid-dark opacity-40 dark:opacity-100 z-0"></div>
@@ -163,12 +187,18 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
-        <Footer />
+        <Footer onOpenModal={(type) => handleOpenModal(type)} />
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
         <FABs onOpenModal={handleOpenModal} />
+        <CookieConsent
+          isVisible={isCookieBannerVisible}
+          onAcceptAll={handleAcceptAllCookies}
+          onDecline={handleRejectCookies}
+          onManage={() => handleOpenModal('COOKIES')}
+        />
       </div>
 
       <ServicesMenu
@@ -205,6 +235,12 @@ const App: React.FC = () => {
       <TermsModal
         isOpen={activeModal === 'TERMS'}
         onClose={handleCloseModal}
+      />
+      <CookieConsent
+        isVisible={isCookieBannerVisible && activeModal !== 'COOKIES'}
+        onAcceptAll={handleAcceptAllCookies}
+        onDecline={handleRejectCookies}
+        onManage={handleManageCookies}
       />
       <CookieConsentModal
         isOpen={activeModal === 'COOKIES'}
