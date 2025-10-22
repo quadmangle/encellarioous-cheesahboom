@@ -27,3 +27,25 @@ dist-ssr
 .vite/
 
 # Build output
+
+# Archives
+1_Ops-chattia-llm-connected.zip
+*.zip
+
+# Binary assets (text-based equivalents only)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+*.webp
+*.mp3
+*.mp4
+*.ogg
+*.wav
+*.flac
+*.mov
+*.avi
+*.mkv
+

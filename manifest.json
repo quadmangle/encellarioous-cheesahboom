@@ -1,0 +1,57 @@
+{
+  "id": "/",
+  "name": "Ops Online Support",
+  "short_name": "Ops Support",
+  "description": "Progressive web experience for the OPS Online Support workspace with offline continuity and responsive service insights.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#13162a",
+  "theme_color": "#00c4ff",
+  "categories": ["productivity", "business", "utilities"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Knowledge base",
+      "short_name": "Docs",
+      "description": "Jump directly into the knowledge center",
+      "url": "/#knowledge",
+      "icons": [
+        {
+          "src": "icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Contact operations",
+      "short_name": "Contact",
+      "description": "Open the operations contact panel",
+      "url": "/#contact",
+      "icons": [
+        {
+          "src": "icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

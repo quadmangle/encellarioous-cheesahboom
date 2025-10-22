@@ -102,6 +102,21 @@ const App: React.FC = () => {
     handleOpenModal('SERVICE', serviceKey);
   };
 
+  const scrollToTop = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const scrollToServices = () => {
+    setIsServicesMenuOpen(false);
+    requestAnimationFrame(() => {
+      servicePageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
+
   const persistCookiePreferences = (preferences: CookiePreferences, hideBanner = true) => {
     const normalized: CookiePreferences = {
       necessary: true,
@@ -163,12 +178,16 @@ const App: React.FC = () => {
             onRequestInfo={() => handleOpenModal('CONTACT')}
           />
         </main>
-        <Footer />
+        <Footer onOpenModal={(type) => handleOpenModal(type)} />
         <MobileNav
           onOpenModal={handleOpenModal}
           onToggleServicesMenu={toggleServicesMenu}
         />
-        <FABs onOpenModal={handleOpenModal} />
+        <FABs
+          onOpenModal={(type) => handleOpenModal(type)}
+          onScrollToTop={scrollToTop}
+          onScrollToServices={scrollToServices}
+        />
       </div>
 
       <ServicesMenu

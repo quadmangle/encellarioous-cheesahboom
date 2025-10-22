@@ -1,6 +1,6 @@
 # OPS Service Stack Reference
 
-This document catalogs the AI service implementations extracted from `1_Ops-chattia-llm-connected.zip` and now tracked in the repository for operational visibility.
+This document catalogs the AI service implementations now tracked directly in the repository for operational visibility after retiring the legacy `1_Ops-chattia-llm-connected.zip` archive.
 
 ## AI Service Gateway
 - `new_src/services/aiService.ts` exposes a plug-and-play abstraction with `ACTIVE_SERVICE_STACK` defaulting to `chattia7`, enabling Google, Cloudflare, TinyML, or the seven-layer Chattia stack to be swapped without touching the UI. It imports each stack and re-exports `streamChatResponse` and `resetChat` from the selected provider.【F:new_src/services/aiService.ts†L13-L62】
