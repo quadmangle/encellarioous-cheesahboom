@@ -7,7 +7,7 @@
  * to ensure the heavy model is only initialized once.
  */
 import type { ChatMessage, AIProgress } from '../../types';
-import { integrationConfig } from '../integrationConfig';
+import { integrationConfig } from '../../src/services/runtime/integrationConfig';
 
 // FIX: Declare the 'webllm' global variable, which is loaded from a script tag.
 // This informs TypeScript of its existence and prevents "Cannot find name" errors.
