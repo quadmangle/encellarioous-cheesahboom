@@ -57,3 +57,165 @@ select:focus-visible {
     transform: none;
   }
 }
+
+/* Cookie preference toggle switch */
+.preference-switch {
+  --switch-width: 70px;
+  --switch-height: 36px;
+  --switch-padding: 4px;
+  --switch-radius: 999px;
+  --switch-transition: cubic-bezier(0.45, 0, 0.2, 1);
+  --switch-on-bg: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 50%, #ec4899 100%);
+  --switch-off-bg: linear-gradient(135deg, rgba(148, 163, 184, 0.9), rgba(71, 85, 105, 1));
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  cursor: pointer;
+}
+
+.preference-switch--locked {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.preference-switch__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  cursor: inherit;
+}
+
+.preference-switch__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--switch-radius);
+  background: var(--switch-off-bg);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.4);
+  transition: background 220ms var(--switch-transition),
+    box-shadow 220ms var(--switch-transition);
+}
+
+.preference-switch--on .preference-switch__track {
+  background: var(--switch-on-bg);
+  box-shadow: 0 12px 28px rgba(79, 70, 229, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.preference-switch--locked .preference-switch__track {
+  background: linear-gradient(135deg, rgba(203, 213, 225, 0.95), rgba(148, 163, 184, 0.9));
+  box-shadow: inset 0 0 0 1px rgba(100, 116, 139, 0.45);
+}
+
+.preference-switch:not(.preference-switch--locked):hover .preference-switch__track {
+  box-shadow: 0 12px 26px rgba(148, 163, 184, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.preference-switch--on:not(.preference-switch--locked):hover .preference-switch__track {
+  box-shadow: 0 16px 34px rgba(236, 72, 153, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+
+.preference-switch__glow {
+  position: absolute;
+  inset: -12px;
+  border-radius: var(--switch-radius);
+  background: radial-gradient(circle at center, rgba(236, 72, 153, 0.45), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  filter: blur(10px);
+}
+
+.preference-switch--on .preference-switch__glow {
+  opacity: 1;
+}
+
+.preference-switch__thumb {
+  position: absolute;
+  top: var(--switch-padding);
+  left: var(--switch-padding);
+  width: calc(var(--switch-height) - var(--switch-padding) * 2);
+  height: calc(var(--switch-height) - var(--switch-padding) * 2);
+  border-radius: var(--switch-radius);
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.4);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #475569;
+  transition: transform 220ms var(--switch-transition),
+    background 220ms ease,
+    box-shadow 220ms ease,
+    color 220ms ease;
+}
+
+.preference-switch--on .preference-switch__thumb {
+  transform: translateX(calc(var(--switch-width) - var(--switch-height)));
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
+  color: #db2777;
+}
+
+.preference-switch--locked .preference-switch__thumb {
+  background: linear-gradient(135deg, #e2e8f0, #cbd5f5);
+  box-shadow: inset 0 0 0 1px rgba(100, 116, 139, 0.4);
+  color: #475569;
+}
+
+.preference-switch__thumb svg {
+  width: 14px;
+  height: 14px;
+}
+
+.preference-switch__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.9);
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.preference-switch--on .preference-switch__dot {
+  background: #fdf4ff;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+}
+
+.preference-switch__status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  min-width: 3.6ch;
+  text-align: right;
+  color: rgba(71, 85, 105, 0.85);
+  transition: color 220ms ease;
+}
+
+.preference-switch__status[data-state='on'] {
+  color: #c026d3;
+}
+
+.preference-switch__status[data-state='locked'] {
+  color: rgba(71, 85, 105, 0.7);
+}
+
+.preference-switch__input:focus-visible + .preference-switch__track {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.35), inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preference-switch__track,
+  .preference-switch__thumb,
+  .preference-switch__dot,
+  .preference-switch__glow,
+  .preference-switch__status {
+    transition: none;
+  }
+}
