@@ -57,6 +57,11 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
           detail: 'Supports tailored content, campaigns, and chatbot memory to deliver relevant communications.',
         },
       },
+      status: {
+        on: 'On',
+        off: 'Off',
+        locked: 'Required',
+      },
       actions: {
         save: 'Save preferences',
         acceptAll: 'Accept all',
@@ -81,6 +86,11 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
           title: 'Personalización y marketing',
           detail: 'Permite contenido personalizado, campañas y memoria del chatbot para ofrecer comunicaciones relevantes.',
         },
+      },
+      status: {
+        on: 'Activado',
+        off: 'Desactivado',
+        locked: 'Obligatoria',
       },
       actions: {
         save: 'Guardar preferencias',
@@ -146,82 +156,60 @@ const CookieConsentModal: React.FC<CookieConsentModalProps> = ({
             const category = content.categories[key];
             const isLocked = key === 'necessary';
             const isEnabled = localPreferences[key];
-            const toggleLabel = `${category.title}: ${isEnabled ? 'enabled' : 'disabled'}`;
+            const toggleState = isLocked
+              ? content.status.locked
+              : isEnabled
+                ? content.status.on
+                : content.status.off;
+            const toggleLabel = `${category.title}: ${toggleState}`;
             const toggleClassName = [
-              'group relative inline-flex h-9 w-16 items-center overflow-hidden rounded-full border transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-rose-400',
-              isLocked ? 'cursor-not-allowed opacity-75' : 'cursor-pointer',
-              isEnabled
-                ? 'border-transparent bg-gradient-to-r from-rose-500 via-rose-500 to-red-500 shadow-[0_10px_24px_rgba(244,63,94,0.45)]'
-                : 'border-gray-300/70 dark:border-gray-600/60 bg-gray-300/80 dark:bg-gray-700/80 shadow-inner',
-              !isLocked && isEnabled ? 'hover:shadow-[0_12px_28px_rgba(244,63,94,0.55)]' : '',
-              !isLocked && !isEnabled ? 'hover:bg-gray-200/90 dark:hover:bg-gray-600/80' : '',
+              'preference-switch',
+              isEnabled ? 'preference-switch--on' : 'preference-switch--off',
+              isLocked ? 'preference-switch--locked' : '',
             ]
-              .filter((className) => Boolean(className))
+              .filter(Boolean)
               .join(' ');
-            const knobClassName = [
-              'relative z-[2] flex h-7 w-7 items-center justify-center rounded-full shadow-lg transition-all duration-300',
-              isEnabled ? 'translate-x-7' : 'translate-x-1',
-              isLocked
-                ? 'bg-gray-200 dark:bg-gray-500 text-gray-600'
-                : isEnabled
-                  ? 'bg-gradient-to-br from-white via-white to-rose-50 text-rose-500'
-                  : 'bg-white dark:bg-gray-50 text-gray-500',
-            ]
-              .filter((className) => Boolean(className))
-              .join(' ');
+            const toggleId = `cookie-toggle-${key}`;
+            const statusId = `${toggleId}-status`;
 
             return (
               <div
                 key={key}
                 className="border border-gray-200 dark:border-gray-700 rounded-2xl p-4 bg-gray-50/80 dark:bg-gray-900/40"
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div>
                     <h3 className="text-base font-semibold text-primary dark:text-accent">{category.title}</h3>
                     <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{category.detail}</p>
                   </div>
-                  <button
-                    type="button"
-                    role="switch"
-                    aria-checked={isEnabled}
-                    aria-disabled={isLocked}
-                    aria-label={toggleLabel}
-                    disabled={isLocked}
-                    onClick={() => handleToggle(key)}
-                    className={toggleClassName}
-                  >
-                    <span className="visually-hidden">{toggleLabel}</span>
+                  <div className="flex items-center gap-3">
+                    <label className={toggleClassName}>
+                      <input
+                        id={toggleId}
+                        type="checkbox"
+                        className="preference-switch__input"
+                        checked={isEnabled}
+                        disabled={isLocked}
+                        onChange={() => handleToggle(key)}
+                        aria-describedby={statusId}
+                      />
+                      <span aria-hidden="true" className="preference-switch__track">
+                        <span className="preference-switch__thumb">
+                          {isLocked ? <Icon name="lock" /> : <span className="preference-switch__dot" />}
+                        </span>
+                        <span className="preference-switch__glow" aria-hidden="true" />
+                      </span>
+                      <span className="visually-hidden">{toggleLabel}</span>
+                    </label>
                     <span
-                      aria-hidden="true"
-                      className={`pointer-events-none absolute left-3 z-[1] text-[0.65rem] font-semibold tracking-[0.18em] text-white transition-opacity duration-300 ${
-                        isEnabled ? 'opacity-100' : 'opacity-0'
-                      }`}
+                      id={statusId}
+                      className="preference-switch__status"
+                      aria-live="polite"
+                      data-state={isLocked ? 'locked' : isEnabled ? 'on' : 'off'}
                     >
-                      ON
+                      {toggleState}
                     </span>
-                    <span
-                      aria-hidden="true"
-                      className={`pointer-events-none absolute right-3 z-[1] text-[0.65rem] font-semibold tracking-[0.18em] transition-opacity duration-300 ${
-                        isEnabled ? 'opacity-0' : 'opacity-100'
-                      } ${isLocked ? 'text-gray-400 dark:text-gray-400' : 'text-gray-500 dark:text-gray-300'}`}
-                    >
-                      OFF
-                    </span>
-                    <span className={knobClassName}>
-                      {isLocked ? (
-                        <Icon name="lock" className="h-3.5 w-3.5" />
-                      ) : (
-                        <span
-                          aria-hidden="true"
-                          className={`rounded-full transition-all duration-300 ${
-                            isEnabled
-                              ? 'h-3 w-3 bg-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.55)]'
-                              : 'h-2.5 w-2.5 bg-gray-300 dark:bg-gray-500'
-                          }`}
-                        />
-                      )}
-                    </span>
-                  </button>
+                  </div>
                 </div>
               </div>
             );
