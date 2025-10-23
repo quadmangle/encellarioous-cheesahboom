@@ -101,11 +101,26 @@ const App: React.FC = () => {
   };
 
   const scrollToServiceSection = () => {
-    if (!servicePageRef.current) {
+    if (typeof window === 'undefined') {
       return;
     }
 
-    servicePageRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const section = servicePageRef.current ?? document.getElementById('service-details');
+
+    if (!section) {
+      return;
+    }
+
+    const runScroll = () => {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    if (typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(runScroll);
+      return;
+    }
+
+    window.setTimeout(runScroll, 0);
   };
 
   const handleScrollToServices = () => {
@@ -115,10 +130,8 @@ const App: React.FC = () => {
   };
 
   const handleServiceClick = (serviceKey: ServiceKey) => {
-    setIsServicesMenuOpen(false);
     setActiveServicePage(serviceKey);
-
-    scrollToServiceSection();
+    handleScrollToServices();
   };
 
   const handleServiceCardClick = (serviceKey: ServiceKey) => {
